@@ -56,5 +56,6 @@ class SplashFragment : Fragment() {
             motionLayout.startAnimation(b)
         }
 
+
     }
 }
