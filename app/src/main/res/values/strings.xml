@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">MovieAppQ</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_tvshow">TV Show</string>
+    <string name="title_search_movie">Search Movies</string>
+    <string name="title_search_tv_show">Search TV Show</string>
+    <string name="title_content_des_img_logo">Content Image Back</string>
+    <string name="title_content_des_info">Content Image Info</string>
+    <string name="title_content_des_img_favo">Content image Favorite</string>
+    <string name="title_upcoming">Upcoming</string>
+    <string name="title_top_rated">Top Rated</string>
+    <string name="title_popular">Popular</string>
+    <string name="title_on_air_today">Airing Today</string>
+    <string name="title_des_poster">Content Image Poster</string>
+    <string name="title_content_des_img_back">Content Image Back</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_description">Overview</string>
+    <string name="title_error">Terjadi Kesalahan</string>
+    <string name="title_error_content">Silahkan coba lagi atau hubungi kontak pengembang</string>
+    <string name="title_error_ok">Oke, Saya mengerti</string>
+    <string name="title_viewers">. Viewers</string>
+    <string name="title_see_all">See all</string>
+    <string name="title_cast">Cast</string>
+    <string name="title_production">Production</string>
+    <string name="title_videos">Video Trailer</string>
+    <string name="title_search">Search Movies Or TV</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_tab_movie">Movie</string>
+    <string name="title_tab_tvshow">TV Show</string>
+    <string name="title_content_des_img_tab_icon">Image Content Des Tab</string>
+    <string name="title_content_des_img_bg">Image Content Des Background</string>
+    <string name="title_trailer">Trailer</string>
 </resources>
