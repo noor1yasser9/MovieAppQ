@@ -3,7 +3,13 @@ package com.nurbk.ps.movieappq.others
 import android.app.Activity
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Constants {
 
@@ -15,4 +21,17 @@ object Constants {
         }
         window.statusBarColor = ContextCompat.getColor(activity, color)
     }
+
+    @Throws(ParseException::class)
+    fun dateFormat(date: String, input : String, output : String) : String{
+        var format = SimpleDateFormat(input, Locale.getDefault())
+
+        val newDate: Date? = format.parse(date)
+
+        format = SimpleDateFormat(output, Locale.getDefault())
+
+        return format.format(newDate!!)
+    }
+
+
 }
