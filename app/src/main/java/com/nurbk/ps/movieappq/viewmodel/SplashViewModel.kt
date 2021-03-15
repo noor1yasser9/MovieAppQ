@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.nurbk.ps.movieappq.repositories.MoviesRepositories
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -11,7 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(application: Application) :
+class SplashViewModel @Inject constructor(
+    application: Application,
+) :
     AndroidViewModel(application) {
 
     private val mutableLiveData = MutableLiveData<SplashState>()
