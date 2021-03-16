@@ -1,4 +1,4 @@
-package com.nurbk.ps.movieappq.others
+package com.nurbk.ps.movieappq.utils
 
 
 class ResultResponse<T> private constructor(val status: Status, val message: String?, val data: T) {
