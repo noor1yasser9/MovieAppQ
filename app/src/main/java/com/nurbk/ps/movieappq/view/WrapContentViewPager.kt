@@ -2,6 +2,7 @@ package com.nurbk.ps.movieappq.view
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 
 class WrapContentViewPager : ViewPager {
