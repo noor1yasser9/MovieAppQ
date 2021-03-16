@@ -62,17 +62,17 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
 
     private fun setupView() {
-        with(mBinding) {
-            rvMovie.apply {
-                adapter = movieAdapter
-                layoutManager = LinearLayoutManager(
-                    requireContext(), LinearLayoutManager.VERTICAL, false
-                )
-                addOnScrollListener(onScrollListener)
-            }
-
-
-        }
+//        with(mBinding) {
+//            rvMovie.apply {
+//                adapter = movieAdapter
+//                layoutManager = LinearLayoutManager(
+//                    requireContext(), LinearLayoutManager.VERTICAL, false
+//                )
+//                addOnScrollListener(onScrollListener)
+//            }
+//
+//
+//        }
     }
 
     private var isLoading = false
@@ -92,7 +92,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-//                            showLoading()
                             showProgressBar()
                         }
                         ResultResponse.Status.SUCCESS -> {
@@ -100,10 +99,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             val data = it.data as NewPlaying
                             onScrollListener.totalCount = data.totalPages
                             movieAdapter.data = (data.results)
-//                            movieAdapter.notifyDataSetChanged()
                         }
                         ResultResponse.Status.ERROR -> {
-//                            hideProgressBar()
                             hideProgressBar()
                         }
                     }
