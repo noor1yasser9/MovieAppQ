@@ -1,4 +1,4 @@
-package com.nurbk.ps.movieappq.others
+package com.nurbk.ps.movieappq.utils
 
 import android.util.Log
 import android.widget.AbsListView
