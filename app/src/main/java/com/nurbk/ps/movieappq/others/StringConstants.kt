@@ -13,8 +13,4 @@ object StringConstants {
     const val imageUrl = "https://image.tmdb.org/t/p/original/"
     const val youtubeUrl = "https://img.youtube.com/vi/"
     val DEBUG = Boolean.parseBoolean("true")
-
-
-
-
 }
