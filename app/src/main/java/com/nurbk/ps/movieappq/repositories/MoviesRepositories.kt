@@ -1,10 +1,9 @@
 package com.nurbk.ps.movieappq.repositories
 
 
-import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.network.MoviesInterface
-import com.nurbk.ps.movieappq.others.ResultResponse
+import com.nurbk.ps.movieappq.utils.ResultResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
