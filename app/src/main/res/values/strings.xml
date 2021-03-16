@@ -33,4 +33,9 @@
     <string name="title_content_des_img_tab_icon">Image Content Des Tab</string>
     <string name="title_content_des_img_bg">Image Content Des Background</string>
     <string name="title_trailer">Trailer</string>
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+
+    <string name="transition_from_home_to_search" translatable="false">transitionFromHomeToSearch</string>
+
 </resources>

@@ -52,4 +52,8 @@
     <dimen name="margin_28">28dp</dimen>
     <dimen name="size_90">90dp</dimen>
     <dimen name="size_83">83dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="padding_14dp">14dp</dimen>
+    <dimen name="toolbarLogoSize">48dp</dimen>
+    <dimen name="toolbarLogoPadding">16</dimen>
 </resources>
