@@ -1,24 +1,19 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
-import com.nurbk.ps.movieappq.BR
-import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
+import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
 import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
-import com.nurbk.ps.movieappq.others.OnScrollListener
-import com.nurbk.ps.movieappq.others.ResultResponse
+import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
+import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +34,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
 
     private val movieAdapter by lazy {
-        GenericAdapter(R.layout.adapter_movie, BR.movie, this)
+        MoviePagerAdapter(requireContext())
     }
 
 
@@ -56,23 +51,27 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView()
+
         setupViewModel()
     }
 
 
-    private fun setupView() {
-//        with(mBinding) {
-//            rvMovie.apply {
-//                adapter = movieAdapter
+    private fun setupView(list: List<Any>) {
+        with(mBinding) {
+            shUpcomingPager.isVisible = false
+            viewPagerNowPlayingMovies.apply {
+                adapter = movieAdapter
+                pageMargin = 60
+                setPageTransformer(false, BasicViewPagerTransformation())
+                currentItem = list.size / 2
 //                layoutManager = LinearLayoutManager(
-//                    requireContext(), LinearLayoutManager.VERTICAL, false
+//                    requireContext(), LinearLayoutManager.HORIZONTAL, false
 //                )
 //                addOnScrollListener(onScrollListener)
-//            }
-//
-//
-//        }
+            }
+
+
+        }
     }
 
     private var isLoading = false
@@ -80,10 +79,10 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     private var isScrolling = false
 
 
-    private val onScrollListener = OnScrollListener(isLoading, isLastPage, 0, isScrolling) {
-        viewModel.getAllMovie()
-        isScrolling = false
-    }
+//    private val onScrollListener = OnScrollListener(isLoading, isLastPage, 0, isScrolling) {
+//        viewModel.getAllMovie()
+//        isScrolling = false
+//    }
 
     private fun setupViewModel() {
 
@@ -97,8 +96,9 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.SUCCESS -> {
                             hideProgressBar()
                             val data = it.data as NewPlaying
-                            onScrollListener.totalCount = data.totalPages
-                            movieAdapter.data = (data.results)
+//                            onScrollListener.totalCount = data.totalPages
+                            movieAdapter.setItem((data.results))
+                            setupView(data.results)
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
