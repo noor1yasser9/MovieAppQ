@@ -2,6 +2,8 @@ package com.nurbk.ps.movieappq.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nurbk.ps.movieappq.repositories.MoviesRepositories
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,4 +29,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getMovieLiveData() = moviesRepositories.getMovieLiveData()
+
+
 }
