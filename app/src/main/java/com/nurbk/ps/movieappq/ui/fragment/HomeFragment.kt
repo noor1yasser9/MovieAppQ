@@ -14,6 +14,8 @@ import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
 import com.nurbk.ps.movieappq.utils.ResultResponse
+import com.nurbk.ps.movieappq.view.BaseView
+import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +36,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
 
     private val movieAdapter by lazy {
-        MoviePagerAdapter(requireContext())
+
     }
 
 
@@ -56,21 +58,23 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     }
 
 
-    private fun setupView(list: List<Any>) {
-        with(mBinding) {
-            shUpcomingPager.isVisible = false
-            viewPagerNowPlayingMovies.apply {
-                adapter = movieAdapter
+    private fun setupViewLarge(
+        list: List<ResultMovie>,
+        viewPage: WrapContentViewPager,
+        type: MoviePagerAdapter.ITEM_TYPE, goneView: View
+    ) {
+        goneView.isVisible = false
+        MoviePagerAdapter(type).also { adapters ->
+            adapters.setItem(list)
+            adapters.notifyDataSetChanged()
+            viewPage.apply {
+                adapter = adapters
                 pageMargin = 60
-                setPageTransformer(false, BasicViewPagerTransformation())
-                currentItem = list.size / 2
-//                layoutManager = LinearLayoutManager(
-//                    requireContext(), LinearLayoutManager.HORIZONTAL, false
-//                )
-//                addOnScrollListener(onScrollListener)
+                if (type == MoviePagerAdapter.ITEM_TYPE.LARGE) {
+                    setPageTransformer(false, BasicViewPagerTransformation())
+                    currentItem = list.size / 2
+                }
             }
-
-
         }
     }
 
@@ -96,9 +100,20 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.SUCCESS -> {
                             hideProgressBar()
                             val data = it.data as NewPlaying
-//                            onScrollListener.totalCount = data.totalPages
-                            movieAdapter.setItem((data.results))
-                            setupView(data.results)
+                            setupViewLarge(
+                                data.results,
+                                mBinding.viewPagerNowPlayingMovies,
+                                MoviePagerAdapter.ITEM_TYPE.LARGE,
+                                mBinding.shUpcomingPager
+                            )
+
+                            setupViewLarge(
+                                data.results,
+                                mBinding.layoutPopularMovies.viewPager,
+                                MoviePagerAdapter.ITEM_TYPE.SMALL,
+                                mBinding.layoutPopularMovies.shUpcoming
+                            )
+                            mBinding.layoutPopularMovies.title = "Results"
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
