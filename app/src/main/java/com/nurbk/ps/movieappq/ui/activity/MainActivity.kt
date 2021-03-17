@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
-
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragment_nav_host_home) as NavHostFragment?
 
-        val navController = navHostFragment!!.navController
+        navController = navHostFragment!!.navController
 
         val appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
 
@@ -61,4 +62,20 @@ class MainActivity : AppCompatActivity() {
         }
         setUpStatusBar(this, color)
     }
+
+    override fun onBackPressed() {
+        val destination = navController.currentDestination!!
+        when (destination.id) {
+            R.id.homeFragment -> {
+                finish()
+            }
+            R.id.splashFragment -> {
+
+            }
+            else -> {
+                super.onBackPressed()
+            }
+        }
+    }
+
 }
