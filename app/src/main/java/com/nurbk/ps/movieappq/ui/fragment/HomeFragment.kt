@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
+import com.nurbk.ps.movieappq.BR
+import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
 import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
@@ -28,14 +31,13 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     private lateinit var mBinding: FragmentHomeBinding
 
-//    @Inject
-//    lateinit var glide: RequestManager
 
     @Inject
     lateinit var viewModel: HomeViewModel
 
-
-
+    private val movieAdapter by lazy {
+        GenericAdapter(R.layout.adapter_movie, BR.movie, this)
+    }
 
 
     override fun onCreateView(
@@ -53,6 +55,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
+
     }
 
 
@@ -131,14 +134,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 mBinding.layoutTopMovies.shUpcoming
                             )
                             mBinding.layoutTopMovies.title = "Top Rated"
-
-                            setupViewLarge(
-                                data.results,
-                                mBinding.layoutUpComingMoviesUp.viewPager,
-                                MoviePagerAdapter.ITEM_TYPE.SMALL,
-                                mBinding.layoutUpComingMoviesUp.shUpcoming
-                            )
-                            mBinding.layoutUpComingMoviesUp.title = "Upcoming"
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
@@ -176,9 +171,41 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 }
             }
         }
+        lifecycleScope.launchWhenStarted {
+            viewModel.getPopularMovieLiveData().collect {
+                withContext(Dispatchers.Main) {
+                    when (it.status) {
+                        ResultResponse.Status.LOADING -> {
+                            showProgressBar()
+                        }
+                        ResultResponse.Status.SUCCESS -> {
+                            hideProgressBar()
+                            val data = it.data as NewPlaying
+                            movieAdapter.data = data.results
+                            rcData()
+                        }
+                        ResultResponse.Status.ERROR -> {
+                            hideProgressBar()
+                        }
+                        else -> {
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
+    private fun rcData() {
+        with(mBinding.layoutRcData) {
+            shUpcoming.isVisible = false
+            title = "Popular"
+            this.rvMovie.apply {
+                adapter = movieAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
+    }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
 
