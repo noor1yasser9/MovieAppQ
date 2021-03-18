@@ -16,11 +16,9 @@ class HomeViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private var page = 1
     fun getTopMovie() {
         viewModelScope.launch {
-            moviesRepositories.getTopMovie(page)
-            page++
+            moviesRepositories.getTopMovie()
         }
     }
 
@@ -32,21 +30,32 @@ class HomeViewModel @Inject constructor(
 
     fun getUpcomingMovie() {
         viewModelScope.launch {
-            moviesRepositories.getUpcomingMovie(1)
+            moviesRepositories.getUpcomingMovie()
+        }
+    }
+
+    fun getPopularMovie() {
+        viewModelScope.launch {
+            moviesRepositories.getPopularMovie()
         }
     }
 
     init {
         getTopMovie()
         getNewMovie()
-//        getUpcomingMovie()
+        getUpcomingMovie()
+        getPopularMovie()
     }
 
-    fun getMovieTopLiveData() = moviesRepositories.getMovieTopLiveData()
+    fun getMovieTopLiveData(): StateFlow<ResultResponse<Any>> =
+        moviesRepositories.getMovieTopLiveData()
 
     fun getNewMovieLiveData(): StateFlow<ResultResponse<Any>> =
         moviesRepositories.getNewMovieLiveData()
 
     fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> =
         moviesRepositories.getUpcomingMovieLiveData()
+
+    fun getPopularMovieLiveData(): StateFlow<ResultResponse<Any>> =
+        moviesRepositories.getPopularMovieLiveData()
 }
