@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager.widget.ViewPager
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
 import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
@@ -14,7 +15,6 @@ import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
 import com.nurbk.ps.movieappq.utils.ResultResponse
-import com.nurbk.ps.movieappq.view.BaseView
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +35,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     lateinit var viewModel: HomeViewModel
 
 
-    private val movieAdapter by lazy {
 
-    }
 
 
     override fun onCreateView(
@@ -66,7 +64,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         goneView.isVisible = false
         MoviePagerAdapter(type).also { adapters ->
             adapters.setItem(list)
-            adapters.notifyDataSetChanged()
             viewPage.apply {
                 adapter = adapters
                 pageMargin = 60
@@ -91,7 +88,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     private fun setupViewModel() {
 
         lifecycleScope.launchWhenStarted {
-            viewModel.getMovieLiveData().collect {
+            viewModel.getNewMovieLiveData().collect {
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
@@ -106,17 +103,74 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 MoviePagerAdapter.ITEM_TYPE.LARGE,
                                 mBinding.shUpcomingPager
                             )
-
-                            setupViewLarge(
-                                data.results,
-                                mBinding.layoutPopularMovies.viewPager,
-                                MoviePagerAdapter.ITEM_TYPE.SMALL,
-                                mBinding.layoutPopularMovies.shUpcoming
-                            )
-                            mBinding.layoutPopularMovies.title = "Results"
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
+                        }
+                        else -> {
+                        }
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.getMovieTopLiveData().collect {
+                withContext(Dispatchers.Main) {
+                    when (it.status) {
+                        ResultResponse.Status.LOADING -> {
+                            showProgressBar()
+                        }
+                        ResultResponse.Status.SUCCESS -> {
+                            hideProgressBar()
+                            val data = it.data as NewPlaying
+                            setupViewLarge(
+                                data.results,
+                                mBinding.layoutTopMovies.viewPager,
+                                MoviePagerAdapter.ITEM_TYPE.SMALL,
+                                mBinding.layoutTopMovies.shUpcoming
+                            )
+                            mBinding.layoutTopMovies.title = "Top Rated"
+
+                            setupViewLarge(
+                                data.results,
+                                mBinding.layoutUpComingMoviesUp.viewPager,
+                                MoviePagerAdapter.ITEM_TYPE.SMALL,
+                                mBinding.layoutUpComingMoviesUp.shUpcoming
+                            )
+                            mBinding.layoutUpComingMoviesUp.title = "Upcoming"
+                        }
+                        ResultResponse.Status.ERROR -> {
+                            hideProgressBar()
+                        }
+                        else -> {
+                        }
+                    }
+                }
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.getUpcomingMovieLiveData().collect {
+                withContext(Dispatchers.Main) {
+                    when (it.status) {
+                        ResultResponse.Status.LOADING -> {
+                            showProgressBar()
+                        }
+                        ResultResponse.Status.SUCCESS -> {
+                            hideProgressBar()
+                            val data = it.data as NewPlaying
+                            setupViewLarge(
+                                data.results,
+                                mBinding.layoutUpComingMoviesUp.viewPager,
+                                MoviePagerAdapter.ITEM_TYPE.SMALL,
+                                mBinding.layoutUpComingMoviesUp.shUpcoming
+                            )
+                            mBinding.layoutUpComingMoviesUp.title = "Upcoming"
+                        }
+                        ResultResponse.Status.ERROR -> {
+                            hideProgressBar()
+                        }
+                        else -> {
                         }
                     }
                 }
@@ -124,6 +178,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         }
 
     }
+
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
 
