@@ -24,6 +24,7 @@
             android:layout_width="@dimen/size_110"
             android:layout_height="@dimen/margin_160"
             android:foreground="@drawable/bg_ripple"
+            app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="@dimen/radius_8"
             app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
