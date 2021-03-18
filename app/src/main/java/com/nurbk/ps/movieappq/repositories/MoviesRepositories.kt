@@ -1,6 +1,7 @@
 package com.nurbk.ps.movieappq.repositories
 
 
+import android.util.Log
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.network.MoviesInterface
 import com.nurbk.ps.movieappq.utils.ResultResponse
@@ -21,8 +22,12 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         MutableStateFlow(ResultResponse.loading(""))
     private val newMovieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
-    private val upcomingMovieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
+
+    private val movieUpcomingMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
+    private val moviePopularMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
+        MutableStateFlow(ResultResponse.loading(""))
+
     private val data = ArrayList<ResultMovie>()
     fun getNewMovie() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -47,15 +52,13 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         }
     }
 
-    fun getTopMovie(page: Int) {
+    fun getTopMovie() {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = movieInterface.getNowPlayingMovie(type = "top_rated", page = page)
+            val response = movieInterface.getNowPlayingMovie(type = "top_rated", page = 1)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            data.addAll(it.results)
-                            it.results = data
                             movieTopMutableLiveData.emit(ResultResponse.success(it))
                         }
 
@@ -72,26 +75,47 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         }
     }
 
-    fun getUpcomingMovie(page: Int) {
+    fun getUpcomingMovie() {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = movieInterface.getNowPlayingMovie(type = "upcoming", page = page)
+            val response = movieInterface.getNowPlayingMovie(type = "upcoming", page = 1)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            data.addAll(it.results)
-                            it.results = data
-                            upcomingMovieMutableLiveData.emit(ResultResponse.success(it))
+                            movieUpcomingMutableLiveData.emit(ResultResponse.success(it))
                         }
 
                     } else {
-                        upcomingMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+                        movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
                     }
                 } catch (e: HttpException) {
-                    upcomingMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+                    movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
 
                 } catch (t: Throwable) {
-                    upcomingMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                    movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                }
+            }
+        }
+    }
+
+    fun getPopularMovie() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = movieInterface.getNowPlayingMovie(type = "popular", page = 1)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            moviePopularMutableLiveData.emit(ResultResponse.success(it))
+                        }
+
+                    } else {
+                        movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+                    }
+                } catch (e: HttpException) {
+                    moviePopularMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+
+                } catch (t: Throwable) {
+                    moviePopularMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
                 }
             }
         }
@@ -99,6 +123,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
 
     fun getMovieTopLiveData(): StateFlow<ResultResponse<Any>> = movieTopMutableLiveData
     fun getNewMovieLiveData(): StateFlow<ResultResponse<Any>> = newMovieMutableLiveData
-    fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> = upcomingMovieMutableLiveData
+    fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> = movieUpcomingMutableLiveData
+    fun getPopularMovieLiveData(): StateFlow<ResultResponse<Any>> = moviePopularMutableLiveData
 
 }
