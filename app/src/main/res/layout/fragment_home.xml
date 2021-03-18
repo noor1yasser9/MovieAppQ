@@ -49,13 +49,13 @@
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <include
-                    android:id="@+id/layoutPopularMovies"
+                    android:id="@+id/layoutTopMovies"
                     layout="@layout/layout_movie_view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16"
                     app:layout_constraintTop_toBottomOf="@id/viewPagerNowPlayingMovies"
-                    app:title="Popular" />
+                   />
 
                 <include
                     android:id="@+id/layoutUpComingMoviesUp"
@@ -63,8 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16"
-                    app:layout_constraintTop_toBottomOf="@id/layoutPopularMovies"
-                    app:title="Upcoming" />
+                    app:layout_constraintTop_toBottomOf="@id/layoutTopMovies" />
 
                 <include
                     android:id="@+id/layoutRcData"
