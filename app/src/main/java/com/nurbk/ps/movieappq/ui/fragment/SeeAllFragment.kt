@@ -20,11 +20,13 @@ import com.nurbk.ps.movieappq.utils.OnScrollListener
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import com.nurbk.ps.movieappq.viewmodel.SeeAllViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SeeAllFragment : Fragment() , GenericAdapter.OnListItemViewClickListener<ResultMovie>{
 
     private lateinit var mBinding: FragmentSeeAllBinding
