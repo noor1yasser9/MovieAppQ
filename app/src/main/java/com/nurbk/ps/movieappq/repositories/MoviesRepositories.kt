@@ -28,7 +28,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     private val moviePopularMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
 
-    private val data = ArrayList<ResultMovie>()
+
     fun getNewMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "now_playing", page = 1)
