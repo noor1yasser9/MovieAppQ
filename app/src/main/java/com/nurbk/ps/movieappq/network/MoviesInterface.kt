@@ -9,6 +9,7 @@ import retrofit2.http.Query
 interface MoviesInterface {
 
     @GET("movie/{type}")
+
     suspend fun getNowPlayingMovie(
         @Path("type") type: String,
         @Query("page") page: Int = 1
