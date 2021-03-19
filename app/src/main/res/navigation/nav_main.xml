@@ -19,5 +19,13 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.nurbk.ps.movieappq.ui.fragment.SeeAllFragment"
+        android:label="SeeAllFragment" />
 </navigation>

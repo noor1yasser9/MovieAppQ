@@ -198,12 +198,12 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         }
     }
 
-    fun navToSeeAll(type:String,title:String){
+   private fun navToSeeAll(type:String,title:String){
         val bundle = Bundle()
         bundle.putString("type",type)
         bundle.putString("title",title)
         viewModel.getMovie(type)
-        findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment,bundle)
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
