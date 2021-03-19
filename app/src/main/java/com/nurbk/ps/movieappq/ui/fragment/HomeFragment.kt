@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.nurbk.ps.movieappq.BR
@@ -78,15 +79,9 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         }
     }
 
-    private var isLoading = false
-    private var isLastPage = false
-    private var isScrolling = false
 
 
-//    private val onScrollListener = OnScrollListener(isLoading, isLastPage, 0, isScrolling) {
-//        viewModel.getAllMovie()
-//        isScrolling = false
-//    }
+
 
     private fun setupViewModel() {
 
@@ -95,10 +90,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            showProgressBar()
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            hideProgressBar()
                             val data = it.data as NewPlaying
                             setupViewLarge(
                                 data.results,
@@ -108,7 +101,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             )
                         }
                         ResultResponse.Status.ERROR -> {
-                            hideProgressBar()
                         }
                         else -> {
                         }
@@ -122,10 +114,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            showProgressBar()
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            hideProgressBar()
                             val data = it.data as NewPlaying
                             setupViewLarge(
                                 data.results,
@@ -133,10 +123,12 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 MoviePagerAdapter.ITEM_TYPE.SMALL,
                                 mBinding.layoutTopMovies.shUpcoming
                             )
+                            mBinding.layoutTopMovies.imageButtonMore.setOnClickListener {
+                                navToSeeAll("top_rated","Top rated")
+                            }
                             mBinding.layoutTopMovies.title = "Top Rated"
                         }
                         ResultResponse.Status.ERROR -> {
-                            hideProgressBar()
                         }
                         else -> {
                         }
@@ -149,10 +141,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            showProgressBar()
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            hideProgressBar()
                             val data = it.data as NewPlaying
                             setupViewLarge(
                                 data.results,
@@ -160,10 +150,14 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 MoviePagerAdapter.ITEM_TYPE.SMALL,
                                 mBinding.layoutUpComingMoviesUp.shUpcoming
                             )
+                            mBinding.layoutUpComingMoviesUp.imageButtonMore.setOnClickListener {
+                                viewModel.getMovie("upcoming")
+                                navToSeeAll("upcoming","Upcoming")
+                            }
                             mBinding.layoutUpComingMoviesUp.title = "Upcoming"
                         }
                         ResultResponse.Status.ERROR -> {
-                            hideProgressBar()
+
                         }
                         else -> {
                         }
@@ -176,16 +170,13 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            showProgressBar()
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            hideProgressBar()
                             val data = it.data as NewPlaying
                             movieAdapter.data = data.results
                             rcData()
                         }
                         ResultResponse.Status.ERROR -> {
-                            hideProgressBar()
                         }
                         else -> {
                         }
@@ -207,15 +198,17 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         }
     }
 
+    fun navToSeeAll(type:String,title:String){
+        val bundle = Bundle()
+        bundle.putString("type",type)
+        bundle.putString("title",title)
+        viewModel.getMovie(type)
+        findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment)
+    }
+
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
 
     }
 
-    private fun hideProgressBar() {
-        isLoading = false
-    }
 
-    private fun showProgressBar() {
-        isLoading = true
-    }
 }
