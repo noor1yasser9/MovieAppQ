@@ -19,8 +19,13 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
     private val movieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
 
-    private val data = ArrayList<ResultMovie>()
+     val data = ArrayList<ResultMovie>()
+
+    private var resultMovie: ResultMovie? = null
+
     fun getMovie(type: String, page: Int) {
+        if (page == 1)
+            data.clear()
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = type, page = page)
             withContext(Dispatchers.Main) {

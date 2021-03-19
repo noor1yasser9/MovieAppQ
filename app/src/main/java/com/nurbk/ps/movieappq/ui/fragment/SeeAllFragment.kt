@@ -1,6 +1,7 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SeeAllFragment : Fragment() , GenericAdapter.OnListItemViewClickListener<ResultMovie>{
+class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<ResultMovie> {
 
     private lateinit var mBinding: FragmentSeeAllBinding
     private lateinit var bundle: Bundle
@@ -75,7 +76,9 @@ class SeeAllFragment : Fragment() , GenericAdapter.OnListItemViewClickListener<R
                         ResultResponse.Status.SUCCESS -> {
                             hideProgressBar()
                             val data = it.data as NewPlaying
-                            movieAdapter
+                            onScrollListener.totalCount = data.totalPages
+                            movieAdapter.data = data.results
+                            movieAdapter.notifyDataSetChanged()
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
@@ -93,6 +96,7 @@ class SeeAllFragment : Fragment() , GenericAdapter.OnListItemViewClickListener<R
             rcData.apply {
                 adapter = movieAdapter
                 layoutManager = LinearLayoutManager(requireContext())
+                addOnScrollListener(onScrollListener)
             }
         }
     }
@@ -104,6 +108,12 @@ class SeeAllFragment : Fragment() , GenericAdapter.OnListItemViewClickListener<R
     private fun showProgressBar() {
         isLoading = true
     }
+
+    override fun onDestroy() {
+        viewModel.getData().clear()
+        super.onDestroy()
+    }
+
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
 
     }

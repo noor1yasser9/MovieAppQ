@@ -151,7 +151,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 mBinding.layoutUpComingMoviesUp.shUpcoming
                             )
                             mBinding.layoutUpComingMoviesUp.imageButtonMore.setOnClickListener {
-                                viewModel.getMovie("upcoming")
                                 navToSeeAll("upcoming","Upcoming")
                             }
                             mBinding.layoutUpComingMoviesUp.title = "Upcoming"
@@ -199,10 +198,10 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     }
 
    private fun navToSeeAll(type:String,title:String){
+       viewModel.getMovie(type)
         val bundle = Bundle()
         bundle.putString("type",type)
         bundle.putString("title",title)
-        viewModel.getMovie(type)
         findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment,bundle)
     }
 
