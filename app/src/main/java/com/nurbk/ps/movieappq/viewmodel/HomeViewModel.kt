@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.nurbk.ps.movieappq.repositories.MoviesRepositories
+import com.nurbk.ps.movieappq.repositories.SeeAllRepositories
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val moviesRepositories: MoviesRepositories,
+    val seeRepositories: SeeAllRepositories,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -39,6 +41,14 @@ class HomeViewModel @Inject constructor(
             moviesRepositories.getPopularMovie()
         }
     }
+
+
+    fun getMovie(type: String) {
+        viewModelScope.launch {
+            seeRepositories.getMovie(type, 1)
+        }
+    }
+
 
     init {
         getTopMovie()
