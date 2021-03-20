@@ -18,14 +18,9 @@ object HolderAdapter {
     @JvmStatic
     @BindingAdapter("loadImage")
     fun loadImage(view: ImageView, imageUrl: String?) {
-//        Glide.with(view.context)
-//            .load(StringConstants.imageUrl + imageUrl)
-//            .into(view)
-
         Glide
             .with(view.context)
             .load(StringConstants.imageUrl + imageUrl)
-//            .placeholder(R.drawable.placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32 )))
             .into(view)
