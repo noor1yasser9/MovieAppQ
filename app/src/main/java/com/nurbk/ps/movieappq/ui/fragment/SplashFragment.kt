@@ -27,6 +27,7 @@ class SplashFragment : Fragment() {
 
     private lateinit var mBinding: FragmentSplashBinding
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

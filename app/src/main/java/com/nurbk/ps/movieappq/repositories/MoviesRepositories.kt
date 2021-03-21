@@ -25,6 +25,8 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
 
     private val movieUpcomingMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
+
+
     private val moviePopularMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
 
