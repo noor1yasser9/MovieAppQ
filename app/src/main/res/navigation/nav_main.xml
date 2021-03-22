@@ -23,9 +23,20 @@
         <action
             android:id="@+id/action_homeFragment_to_seeAllFragment"
             app:destination="@id/seeAllFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.SeeAllFragment"
-        android:label="SeeAllFragment" />
+        android:label="SeeAllFragment" >
+        <action
+            android:id="@+id/action_seeAllFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsMovieFragment"
+        android:name="com.nurbk.ps.movieappq.ui.fragment.DetailsMovieFragment"
+        android:label="DetailsMovieFragment" />
 </navigation>
