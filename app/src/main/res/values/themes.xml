@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MovieAppQ" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/material_color_blue_grey_900</item>
         <item name="colorPrimaryVariant">@color/material_color_amber_A700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
