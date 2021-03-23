@@ -1,6 +1,5 @@
 package com.nurbk.ps.movieappq.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.databinding.ItemMovieBinding
 import com.nurbk.ps.movieappq.databinding.ItemMovieLargeBinding
-import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
+import com.nurbk.ps.movieappq.model.Movie.ResultMovie
 
 class MoviePagerAdapter(private val itemType: ITEM_TYPE) : PagerAdapter() {
     var movieItem = emptyList<ResultMovie>()
