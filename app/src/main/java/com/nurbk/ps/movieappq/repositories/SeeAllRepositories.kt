@@ -1,6 +1,6 @@
 package com.nurbk.ps.movieappq.repositories
 
-import com.nurbk.ps.movieappq.model.Movie.ResultMovie
+import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.network.MoviesInterface
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import kotlinx.coroutines.CoroutineScope

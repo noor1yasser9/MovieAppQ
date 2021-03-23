@@ -1,4 +1,4 @@
-package com.nurbk.ps.movieappq.model.Movie
+package com.nurbk.ps.movieappq.model.newMovie
 
 
 import com.google.gson.annotations.SerializedName

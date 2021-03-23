@@ -9,7 +9,7 @@ import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.databinding.ItemMovieBinding
 import com.nurbk.ps.movieappq.databinding.ItemMovieLargeBinding
-import com.nurbk.ps.movieappq.model.Movie.ResultMovie
+import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 
 class MoviePagerAdapter(private val itemType: ITEM_TYPE) : PagerAdapter() {
     var movieItem = emptyList<ResultMovie>()

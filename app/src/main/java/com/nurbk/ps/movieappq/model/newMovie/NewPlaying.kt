@@ -1,9 +1,9 @@
-package com.nurbk.ps.movieappq.model.Movie
+package com.nurbk.ps.movieappq.model.newMovie
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Playing(
+data class NewPlaying(
     @SerializedName("dates")
     var dates: DatesMovie,
     @SerializedName("page")

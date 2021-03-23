@@ -1,6 +1,7 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
 import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
-import com.nurbk.ps.movieappq.model.Movie.Playing
-import com.nurbk.ps.movieappq.model.Movie.ResultMovie
+import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
+import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
@@ -88,9 +90,13 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
+                            Log.e("ooo","LOADING")
+
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as Playing
+
+                            val data = it.data as NewPlaying
+                            Log.e("ooo",data.toString())
                             setupViewLarge(
                                 data.results,
                                 mBinding.viewPagerNowPlayingMovies,
@@ -99,6 +105,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             )
                         }
                         ResultResponse.Status.ERROR -> {
+                            Log.e("ooo","ERROR")
+
                         }
                         else -> {
                         }
@@ -114,7 +122,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as Playing
+                            val data = it.data as NewPlaying
                             setupViewLarge(
                                 data.results,
                                 mBinding.layoutTopMovies.viewPager,
@@ -141,7 +149,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as Playing
+                            val data = it.data as NewPlaying
                             setupViewLarge(
                                 data.results,
                                 mBinding.layoutUpComingMoviesUp.viewPager,
@@ -169,7 +177,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as Playing
+                            val data = it.data as NewPlaying
                             movieAdapter.data = data.results
                             rcData()
                         }

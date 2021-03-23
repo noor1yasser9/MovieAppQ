@@ -6,7 +6,7 @@
 
         <variable
             name="movie"
-            type="com.nurbk.ps.movieappq.model.Movie.ResultMovie" />
+            type="com.nurbk.ps.movieappq.model.newMovie.ResultMovie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
