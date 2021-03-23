@@ -60,11 +60,12 @@
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
-                android:translationY="-120dp"
+                android:translationY="-40dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -83,8 +84,6 @@
                             android:layout_height="@dimen/size_240"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:clickable="true"
-                            android:focusable="true"
                             android:foreground="@drawable/bg_ripple"
                             app:cardCornerRadius="@dimen/radius_8"
                             app:cardElevation="@dimen/elevation_8"
@@ -119,7 +118,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_16"
-                            android:layout_marginTop="@dimen/margin_4"
+                            android:layout_marginTop="@dimen/margin_20dp"
                             android:layout_marginEnd="@dimen/margin_16"
                             android:textColor="@color/white"
                             android:textSize="@dimen/font_16"
@@ -240,7 +239,7 @@
                         android:layout_marginTop="@dimen/margin_20dp"
                         android:text="Overview"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/font_14"
+                        android:textSize="@dimen/font_16"
                         app:fontFamily="@font/ff_cocon" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -271,14 +270,14 @@
                         android:layout_marginTop="@dimen/margin_20dp" />
 
                     <include
-                        android:id="@+id/layoutRecommendationMovies"
+                        android:id="@+id/trVideo"
                         layout="@layout/layout_movie_view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_20dp" />
 
                     <include
-                        android:id="@+id/layoutRecommendationMovies"
+                        android:id="@+id/rvProduction"
                         layout="@layout/layout_movie_view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

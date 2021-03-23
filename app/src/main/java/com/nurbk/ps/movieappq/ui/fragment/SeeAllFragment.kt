@@ -1,25 +1,19 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
-import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentSeeAllBinding
-import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
-import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
+import com.nurbk.ps.movieappq.model.Movie.Playing
+import com.nurbk.ps.movieappq.model.Movie.ResultMovie
 import com.nurbk.ps.movieappq.utils.OnScrollListener
 import com.nurbk.ps.movieappq.utils.ResultResponse
-import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import com.nurbk.ps.movieappq.viewmodel.SeeAllViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -75,7 +69,7 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
                         }
                         ResultResponse.Status.SUCCESS -> {
                             hideProgressBar()
-                            val data = it.data as NewPlaying
+                            val data = it.data as Playing
                             onScrollListener.totalCount = data.totalPages
                             movieAdapter.data = data.results
                             movieAdapter.notifyDataSetChanged()

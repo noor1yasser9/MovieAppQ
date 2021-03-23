@@ -8,15 +8,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
 import com.nurbk.ps.movieappq.adapter.MoviePagerAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
-import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
-import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
+import com.nurbk.ps.movieappq.model.Movie.Playing
+import com.nurbk.ps.movieappq.model.Movie.ResultMovie
 import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
@@ -92,7 +90,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
+                            val data = it.data as Playing
                             setupViewLarge(
                                 data.results,
                                 mBinding.viewPagerNowPlayingMovies,
@@ -116,7 +114,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
+                            val data = it.data as Playing
                             setupViewLarge(
                                 data.results,
                                 mBinding.layoutTopMovies.viewPager,
@@ -143,7 +141,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
+                            val data = it.data as Playing
                             setupViewLarge(
                                 data.results,
                                 mBinding.layoutUpComingMoviesUp.viewPager,
@@ -171,7 +169,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         ResultResponse.Status.LOADING -> {
                         }
                         ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
+                            val data = it.data as Playing
                             movieAdapter.data = data.results
                             rcData()
                         }
@@ -202,7 +200,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         val bundle = Bundle()
         bundle.putString("type",type)
         bundle.putString("title",title)
-        findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment,bundle)
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment,bundle)
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
