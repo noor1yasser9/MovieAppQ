@@ -80,9 +80,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     }
 
 
-
-
-
     private fun setupViewModel() {
 
         lifecycleScope.launchWhenStarted {
@@ -90,13 +87,13 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            Log.e("ooo","LOADING")
+                            Log.e("ooo", "LOADING")
 
                         }
                         ResultResponse.Status.SUCCESS -> {
 
                             val data = it.data as NewPlaying
-                            Log.e("ooo",data.toString())
+                            Log.e("ooo", data.toString())
                             setupViewLarge(
                                 data.results,
                                 mBinding.viewPagerNowPlayingMovies,
@@ -105,7 +102,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             )
                         }
                         ResultResponse.Status.ERROR -> {
-                            Log.e("ooo","ERROR")
+                            Log.e("ooo", "ERROR")
 
                         }
                         else -> {
@@ -130,7 +127,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 mBinding.layoutTopMovies.shUpcoming
                             )
                             mBinding.layoutTopMovies.imageButtonMore.setOnClickListener {
-                                navToSeeAll("top_rated","Top rated")
+                                navToSeeAll("top_rated", "Top rated")
                             }
                             mBinding.layoutTopMovies.title = "Top Rated"
                         }
@@ -157,7 +154,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                                 mBinding.layoutUpComingMoviesUp.shUpcoming
                             )
                             mBinding.layoutUpComingMoviesUp.imageButtonMore.setOnClickListener {
-                                navToSeeAll("upcoming","Upcoming")
+                                navToSeeAll("upcoming", "Upcoming")
                             }
                             mBinding.layoutUpComingMoviesUp.title = "Upcoming"
                         }
@@ -203,15 +200,17 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         }
     }
 
-   private fun navToSeeAll(type:String,title:String){
-       viewModel.getMovie(type)
+    private fun navToSeeAll(type: String, title: String) {
+        viewModel.getMovie(type)
         val bundle = Bundle()
-        bundle.putString("type",type)
-        bundle.putString("title",title)
-        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment,bundle)
+        bundle.putString("type", type)
+        bundle.putString("title", title)
+        findNavController().navigate(R.id.action_homeFragment_to_seeAllFragment, bundle)
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
+        viewModel.getDetailsMovie(itemViewModel.id.toString())
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment)
 
     }
 
