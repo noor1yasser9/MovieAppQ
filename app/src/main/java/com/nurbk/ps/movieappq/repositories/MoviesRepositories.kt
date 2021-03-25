@@ -1,7 +1,6 @@
 package com.nurbk.ps.movieappq.repositories
 
 
-import android.util.Log
 import com.nurbk.ps.movieappq.network.MoviesInterface
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import kotlinx.coroutines.CoroutineScope
@@ -39,7 +38,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         MutableStateFlow(ResultResponse.loading(""))
 
 
-    fun getNewMovie() {
+    fun getnewMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "now_playing", page = 1)
             withContext(Dispatchers.Main) {
@@ -230,7 +229,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getSimilarLiveData(): StateFlow<ResultResponse<Any>> = similarMutableLiveData
     fun getDetailsLiveData(): StateFlow<ResultResponse<Any>> = detailsMutableLiveData
     fun getMovieTopLiveData(): StateFlow<ResultResponse<Any>> = movieTopMutableLiveData
-    fun getNewMovieLiveData(): StateFlow<ResultResponse<Any>> = newMovieMutableLiveData
+    fun getnewMovieLiveData(): StateFlow<ResultResponse<Any>> = newMovieMutableLiveData
     fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> = movieUpcomingMutableLiveData
     fun getPopularMovieLiveData(): StateFlow<ResultResponse<Any>> = moviePopularMutableLiveData
 
