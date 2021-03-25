@@ -1,6 +1,7 @@
 package com.nurbk.ps.movieappq.adapter
 
 import android.annotation.SuppressLint
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.nurbk.ps.movieappq.model.detailsMovie.Genre
 import com.nurbk.ps.movieappq.others.StringConstants
 import javax.inject.Inject
 
@@ -23,19 +25,12 @@ class GenericAdapter<T>(
     val itemclick: OnListItemViewClickListener<T>
 ) :
     RecyclerView.Adapter<GenericAdapter.GenericViewHolder<T>>() {
-
-//    val data = ArrayList<T>()
-    private var inflater: LayoutInflater? = null
-
-//    fun addItems(items: List<T>) {
-//        this.data.addAll(items)
-//    }
+    // var inflater: LayoutInflater? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
-        val layoutInflater = inflater ?: LayoutInflater.from(parent.context)
         val binding =
-            DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, layoutId, parent, false)
+            DataBindingUtil.inflate<ViewDataBinding>( LayoutInflater.from(parent.context), layoutId, parent, false)
         return GenericViewHolder(binding)
     }
 
