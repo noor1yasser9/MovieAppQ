@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="details"
+            type="com.nurbk.ps.movieappq.model.detailsMovie.Details" />
     </data>
 
     <com.nurbk.ps.movieappq.view.BaseView
@@ -49,6 +52,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
+                            loadImage="@{details.backdropPath}"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="@drawable/angryimg"
@@ -92,6 +96,8 @@
 
                             <ImageView
                                 android:id="@+id/imgPoster"
+                                loadImage="@{details.posterPath}"
+
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:scaleType="centerCrop" />
@@ -120,6 +126,7 @@
                             android:layout_marginStart="@dimen/margin_16"
                             android:layout_marginTop="@dimen/margin_20dp"
                             android:layout_marginEnd="@dimen/margin_16"
+                            android:text="@{details.originalTitle}"
                             android:textColor="@color/white"
                             android:textSize="@dimen/font_16"
                             app:fontFamily="@font/ff_cocon"
@@ -132,8 +139,10 @@
                             android:id="@+id/textViewShortDescription"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+
                             android:layout_marginTop="@dimen/margin_4"
                             android:layout_marginEnd="@dimen/margin_16"
+                            android:text="@{details.tagline}"
                             android:textColor="@color/material_color_grey_300"
                             android:textSize="@dimen/font_14"
                             app:fontFamily="@font/ff_cocon"
@@ -149,6 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_4"
                             android:numStars="5"
+                            android:rating="@{(float) details.voteAverage}"
                             android:stepSize="0.1"
                             app:layout_constraintStart_toStartOf="@+id/textViewMovieTitle"
                             app:layout_constraintTop_toBottomOf="@id/textViewShortDescription" />
@@ -178,6 +188,8 @@
                             android:layout_marginEnd="@dimen/margin_16"
                             android:drawablePadding="@dimen/padding_8"
                             android:gravity="center_vertical"
+                            android:text="@{details.releaseDate}"
+                            android:textColor="@color/white"
                             app:drawableStartCompat="@drawable/ic_baseline_date_range_24"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageViewMoviePoster"
@@ -193,43 +205,43 @@
                             android:layout_marginEnd="@dimen/margin_16"
                             android:drawablePadding="@dimen/padding_8"
                             android:gravity="center_vertical"
+                            android:text="@{String.valueOf(details.popularity)}"
+
+                            android:textColor="@color/white"
                             app:drawableStartCompat="@drawable/ic_baseline_preview_24"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageViewMoviePoster"
                             app:layout_constraintTop_toBottomOf="@+id/tvRelease"
                             tools:text="" />
 
-                        <TextView
-                            android:id="@+id/tvGenres"
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcGenres"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_16"
-                            android:layout_marginTop="@dimen/margin_8"
-                            android:layout_marginEnd="@dimen/margin_16"
-                            android:drawablePadding="@dimen/padding_8"
-                            android:gravity="center_vertical"
-                            app:drawableStartCompat="@drawable/ic_baseline_local_movies_24"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewMoviePoster"
+                            android:clipToPadding="false"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/padding_16"
+                            android:paddingEnd="@dimen/padding_16"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="@+id/tvPopularity"
+                            app:layout_constraintStart_toStartOf="@+id/tvPopularity"
                             app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
-                            tools:text="" />
+                            tools:itemCount="5"
+                            tools:listitem="@layout/item_genres" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <HorizontalScrollView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcCredits"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_20dp"
                         android:clipToPadding="false"
+                        android:orientation="horizontal"
                         android:paddingStart="@dimen/padding_16"
-                        android:paddingEnd="@dimen/padding_16">
-
-                        <LinearLayout
-                            android:id="@+id/linearLayoutCastContent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:layout_height="100dp" />
-                    </HorizontalScrollView>
+                        android:paddingEnd="@dimen/padding_16"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_credits" />
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -249,6 +261,8 @@
                         android:layout_marginStart="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_8"
                         android:lineSpacingExtra="3dp"
+                        android:text="@{details.overview}"
+
                         android:textColor="@color/material_color_grey_500"
                         android:textSize="@dimen/font_14"
                         tools:text="@string/text" />
