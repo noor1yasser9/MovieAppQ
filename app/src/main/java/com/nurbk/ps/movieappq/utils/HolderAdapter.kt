@@ -28,7 +28,6 @@ object HolderAdapter {
     }
 
 
-
     @JvmStatic
     @BindingAdapter("loadImage")
     fun loadImage(view: ImageView, imageUrl: String?) {
@@ -36,7 +35,7 @@ object HolderAdapter {
             .with(view.context)
             .load(StringConstants.imageUrl + imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32 )))
+            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
             .into(view)
     }
 
@@ -52,4 +51,10 @@ object HolderAdapter {
         text.text = format.format(newDate!!)
     }
 
+    @JvmStatic
+    @BindingAdapter("singleText")
+    fun singleText(text: TextView, isSingle: Boolean) {
+        text.setSingleLine()
+        text.isSelected = isSingle
+    }
 }

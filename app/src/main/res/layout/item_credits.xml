@@ -4,29 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<variable
-    name="cast"
-    type="com.nurbk.ps.movieappq.model.creadits.Cast" />
+
+        <variable
+            name="cast"
+            type="com.nurbk.ps.movieappq.model.creadits.Cast" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_margin="@dimen/margin_4"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4">
 
         <ImageView
-            tools:src="@drawable/ic_launcher_foreground"
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:circleImageUrl="@{cast.profilePath}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_foreground" />
 
         <TextView
-            android:layout_marginTop="@dimen/margin_8"
+            singleText="@{true}"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:ellipsize="marquee"
+            android:gravity="center"
             android:text="@{cast.name}"
             android:textColor="@color/white"
             android:textSize="@dimen/font_16"
