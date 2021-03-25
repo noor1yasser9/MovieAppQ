@@ -24,6 +24,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getDetailsMovie(id:String) {
+        viewModelScope.launch {
+            moviesRepositories.getDetailsMovie(id)
+        }
+    }
+
     fun getNewMovie() {
         viewModelScope.launch {
             moviesRepositories.getNewMovie()
