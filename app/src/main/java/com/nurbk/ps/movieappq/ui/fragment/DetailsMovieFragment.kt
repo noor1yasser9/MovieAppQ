@@ -19,7 +19,6 @@ import com.nurbk.ps.movieappq.model.detailsMovie.Details
 import com.nurbk.ps.movieappq.model.detailsMovie.Genre
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.model.similar.Similar
-import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.DetailViewModel

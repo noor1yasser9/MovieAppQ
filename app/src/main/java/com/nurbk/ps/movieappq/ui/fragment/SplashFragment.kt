@@ -50,13 +50,7 @@ class SplashFragment : Fragment() {
             }
 
         }
-        val b = AnimationUtils.loadAnimation(requireContext(), R.anim.splash)
-        b.reset()
-        mBinding.apply {
-            motionLayout.clearAnimation()
-            motionLayout.startAnimation(b)
-        }
-
+//
 
     }
 }

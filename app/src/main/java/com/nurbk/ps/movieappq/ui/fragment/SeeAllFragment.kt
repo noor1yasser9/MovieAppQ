@@ -36,7 +36,7 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
 
     private val movieAdapter by lazy {
-        GenericAdapter(R.layout.adapter_movie, BR.movie, this)
+        GenericAdapter(R.layout.item_movie_rec, BR.movie, this)
     }
 
     override fun onCreateView(

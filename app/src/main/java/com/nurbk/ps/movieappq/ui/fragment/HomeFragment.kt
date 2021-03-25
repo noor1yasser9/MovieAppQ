@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     lateinit var viewModel: HomeViewModel
 
     private val movieAdapter by lazy {
-        GenericAdapter(R.layout.adapter_movie, BR.movie, this)
+        GenericAdapter(R.layout.item_movie_rec, BR.movie, this)
     }
 
 
@@ -178,6 +178,10 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             val data = it.data as NewPlaying
                             movieAdapter.data = data.results
                             rcData()
+
+                            mBinding.layoutRcData.imageButtonMore.setOnClickListener {
+                                navToSeeAll("popular", "Popular")
+                            }
                         }
                         ResultResponse.Status.ERROR -> {
                         }
