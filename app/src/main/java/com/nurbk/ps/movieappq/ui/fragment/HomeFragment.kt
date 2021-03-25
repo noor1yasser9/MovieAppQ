@@ -18,6 +18,7 @@ import com.nurbk.ps.movieappq.databinding.FragmentHomeBinding
 import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.BasicViewPagerTransformation
+import com.nurbk.ps.movieappq.utils.MemberItemDecoration
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
@@ -196,6 +197,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
             this.rvMovie.apply {
                 adapter = movieAdapter
                 layoutManager = LinearLayoutManager(requireContext())
+                addItemDecoration(MemberItemDecoration())
             }
         }
     }
