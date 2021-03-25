@@ -21,19 +21,16 @@ interface MoviesInterface {
     suspend fun getDetailsMovie(
         @Path("id") id: String,
     ): Response<Details>
+
     @GET("movie/{id}/credits")
     suspend fun getCreditsMovie(
         @Path("id") id: String,
     ): Response<Credits>
 
-    @GET("movie/{id}/similar")
-    suspend fun getSimilarMovie(
+    @GET("movie/{id}/{movies}")
+    suspend fun getMovieData(
         @Path("id") id: String,
-    ): Response<Similar>
-
-   @GET("movie/{id}/recommendations")
-    suspend fun getRecommendationsMovie(
-        @Path("id") id: String,
+        @Path("movies") movie:String
     ): Response<Similar>
 
 

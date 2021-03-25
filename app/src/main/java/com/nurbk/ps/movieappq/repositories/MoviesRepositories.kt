@@ -129,7 +129,8 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
             }
         }
     }
-    fun getDetailsMovie(id:String) {
+
+    fun getDetailsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getDetailsMovie(id = id)
             withContext(Dispatchers.Main) {
@@ -143,8 +144,11 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        detailsMutableLiveData.emit(ResultResponse.success(
-                            "Ooops: ${response.errorBody()}",""))
+                        detailsMutableLiveData.emit(
+                            ResultResponse.success(
+                                "Ooops: ${response.errorBody()}", ""
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
                     detailsMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
@@ -155,32 +159,37 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
             }
         }
     }
- private   fun getCreditsMovie(id:String) {
+
+    private fun getCreditsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getCreditsMovie(id = id)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                           creditsMutableLiveData.emit(ResultResponse.success(it))
+                            creditsMutableLiveData.emit(ResultResponse.success(it))
                         }
 
                     } else {
-                        creditsMutableLiveData.emit(ResultResponse.error(
-                            "Ooops: ${response.errorBody()}",""))
+                        creditsMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}", ""
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}",e))
+                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
                 } catch (t: Throwable) {
-                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}",t))
+                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
     }
-    private   fun getSimilarMovie(id:String) {
+
+    private fun getSimilarMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = movieInterface.getSimilarMovie(id = id)
+            val response = movieInterface.getMovieData(id = id, "similar")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -189,21 +198,25 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        similarMutableLiveData.emit(ResultResponse.error(
-                            "Ooops: ${response.errorBody()}",""))
+                        similarMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}", ""
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}",e))
+                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
                 } catch (t: Throwable) {
-                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}",t))
+                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
     }
-    private   fun getRecommendationsMovie(id:String) {
+
+    private fun getRecommendationsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = movieInterface.getRecommendationsMovie(id = id)
+            val response = movieInterface.getMovieData(id = id,"recommendations")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -212,20 +225,36 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        recommendationsMutableLiveData.emit(ResultResponse.error(
-                            "Ooops: ${response.errorBody()}",""))
+                        recommendationsMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}", ""
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    recommendationsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}",e))
+                    recommendationsMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
 
                 } catch (t: Throwable) {
-                    recommendationsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}",t))
+                    recommendationsMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
                 }
             }
         }
     }
+
     fun getCreditsLiveData(): StateFlow<ResultResponse<Any>> = creditsMutableLiveData
-    fun getRecommendationsLiveData(): StateFlow<ResultResponse<Any>> = recommendationsMutableLiveData
+    fun getRecommendationsLiveData(): StateFlow<ResultResponse<Any>> =
+        recommendationsMutableLiveData
+
     fun getSimilarLiveData(): StateFlow<ResultResponse<Any>> = similarMutableLiveData
     fun getDetailsLiveData(): StateFlow<ResultResponse<Any>> = detailsMutableLiveData
     fun getMovieTopLiveData(): StateFlow<ResultResponse<Any>> = movieTopMutableLiveData
