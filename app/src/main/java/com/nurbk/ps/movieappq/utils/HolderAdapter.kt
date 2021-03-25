@@ -14,6 +14,20 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object HolderAdapter {
+    @JvmStatic
+    @BindingAdapter("circleImageUrl")
+    fun setCircleImageUrl(imageView: ImageView, url: String?) {
+        if (url.isNullOrEmpty()) return
+
+        Glide
+            .with(imageView.context)
+            .load(StringConstants.imageUrl + url)
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(imageView)
+    }
+
+
 
     @JvmStatic
     @BindingAdapter("loadImage")
