@@ -7,12 +7,14 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/motionLayout"
         android:background="@drawable/splash_bg"
-        >
+        app:layoutDescription="@xml/fragment_splash_xml_motionlayout_scene">
+
+
         <ImageView
             android:id="@+id/imageViewForeground"
             android:layout_width="match_parent"
@@ -22,25 +24,25 @@
             android:scaleType="centerCrop"
             android:src="@drawable/splash_fg"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie"
             android:layout_width="@dimen/size_110"
             android:layout_height="@dimen/size_110"
-            android:layout_marginBottom="@dimen/size_100"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.69"
+            app:layout_constraintVertical_bias="1.0"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/logo" />
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/texts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ff_cocon"
@@ -48,10 +50,12 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/font_24"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/lottie"
-            app:layout_constraintStart_toStartOf="@+id/lottie"
-            app:layout_constraintTop_toBottomOf="@+id/lottie" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
