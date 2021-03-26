@@ -42,13 +42,19 @@ class GenericAdapter<T>(
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) {
-        val itemViewModel = data[position]
-        holder.bind(itemViewModel, type)
-        holder.itemView.apply {
-            setOnClickListener {
-                itemclick.onClickItem(itemViewModel, 1)
+        try {
+            val itemViewModel = data[position]
+            holder.bind(itemViewModel, type)
+            holder.itemView.apply {
+                setOnClickListener {
+                    itemclick.onClickItem(itemViewModel, 1)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
+
     }
 
 
@@ -56,7 +62,12 @@ class GenericAdapter<T>(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(itemViewModel: T, F: Int) {
-            binding.setVariable(F, itemViewModel)
+            try {
+                binding.setVariable(F, itemViewModel)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
     }
@@ -80,5 +91,6 @@ class GenericAdapter<T>(
     var data: List<T>
         get() = differ.currentList
         set(value) = differ.submitList(value)
+
 
 }
