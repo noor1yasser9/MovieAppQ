@@ -69,6 +69,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         goneView.isVisible = false
         MoviePagerAdapter(type).also { adapters ->
             adapters.setItem(list)
+            adapters.onMovieItemClick = ::onMovieItemClick
             viewPage.apply {
                 adapter = adapters
                 pageMargin = 60
@@ -220,5 +221,10 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     }
 
+
+    private fun onMovieItemClick(movieItem: ResultMovie) {
+        viewModel.getDetailsMovie(movieItem.id.toString())
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment)
+    }
 
 }
