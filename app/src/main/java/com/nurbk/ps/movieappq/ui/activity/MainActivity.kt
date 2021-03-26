@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     bg(null, R.color.black)
                     mBinding.toolbar.visibility = View.VISIBLE
+                    mBinding.navView.isVisible = true
                 }
             }
 
