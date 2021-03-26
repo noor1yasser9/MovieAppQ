@@ -24,6 +24,7 @@ import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -85,8 +86,8 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Details
                         mBinding.details = data
-                        genresAdapter.data=data.genres
-
+                        genresAdapter.data = data.genres
+                        genresAdapter.notifyDataSetChanged()
 
 
                     }
@@ -171,7 +172,12 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     ResultResponse.Status.SUCCESS -> {
                         Log.e("OOO", it.data.toString())
                         val credits = it.data as Credits
-                        creditsAdapter.data = credits.cast
+                        try {
+                            creditsAdapter.data = credits.cast
+                            creditsAdapter.notifyDataSetChanged()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
 
 
                     }

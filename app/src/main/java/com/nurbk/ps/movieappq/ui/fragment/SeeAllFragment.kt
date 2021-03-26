@@ -73,6 +73,7 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
                             val data = it.data as NewPlaying
                             onScrollListener.totalCount = data.totalPages
                             movieAdapter.data=data.results
+
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()

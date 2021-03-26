@@ -95,31 +95,29 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
 
 
+        viewModel.getSearchMovieMutableLiveData().observe(viewLifecycleOwner) {
+            when (it.status) {
+                ResultResponse.Status.LOADING -> {
+                    showProgressBar()
+                }
+                ResultResponse.Status.SUCCESS -> {
+                    hideProgressBar()
+                    val data = it.data as NewPlaying
+                    onScrollListener.totalCount = data.totalPages
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.getSearchMovieMutableLiveData().collect {
-                withContext(Dispatchers.Main) {
-                    when (it.status) {
-                        ResultResponse.Status.LOADING -> {
-                            showProgressBar()
-                        }
-                        ResultResponse.Status.SUCCESS -> {
-                            hideProgressBar()
-                            val data = it.data as NewPlaying
-                            onScrollListener.totalCount = data.totalPages
+                    movieAdapter.data = data.results
 
-                            movieAdapter.data = data.results
+                    Log.e("ttttttttttt","getSearchMovieMutableLiveData")
 
-                        }
-                        ResultResponse.Status.ERROR -> {
-                            hideProgressBar()
-                        }
-                        else -> {
-                        }
-                    }
+                }
+                ResultResponse.Status.ERROR -> {
+                    hideProgressBar()
+                }
+                else -> {
                 }
             }
         }
+
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
@@ -155,9 +153,11 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
         viewModel.getData().clear()
         super.onDestroy()
     }
+
     fun View.hideKeyboard(activity: Activity) {
         val view = activity.view.rootView
-        val inputManager: InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager: InputMethodManager =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 

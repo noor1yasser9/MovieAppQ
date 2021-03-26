@@ -117,78 +117,73 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
         lifecycleScope.launchWhenStarted {
             viewModel.getMovieTopLiveData().collect {
-                withContext(Dispatchers.Main) {
-                    when (it.status) {
-                        ResultResponse.Status.LOADING -> {
+                when (it.status) {
+                    ResultResponse.Status.LOADING -> {
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+                        val data = it.data as NewPlaying
+                        setupViewLarge(
+                            data.results,
+                            mBinding.layoutTopMovies.viewPager,
+                            MoviePagerAdapter.ITEM_TYPE.SMALL,
+                            mBinding.layoutTopMovies.shUpcoming
+                        )
+                        mBinding.layoutTopMovies.imageButtonMore.setOnClickListener {
+                            navToSeeAll("top_rated", "Top rated")
                         }
-                        ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
-                            setupViewLarge(
-                                data.results,
-                                mBinding.layoutTopMovies.viewPager,
-                                MoviePagerAdapter.ITEM_TYPE.SMALL,
-                                mBinding.layoutTopMovies.shUpcoming
-                            )
-                            mBinding.layoutTopMovies.imageButtonMore.setOnClickListener {
-                                navToSeeAll("top_rated", "Top rated")
-                            }
-                            mBinding.layoutTopMovies.title = "Top Rated"
-                        }
-                        ResultResponse.Status.ERROR -> {
-                        }
-                        else -> {
-                        }
+                        mBinding.layoutTopMovies.title = "Top Rated"
+                    }
+                    ResultResponse.Status.ERROR -> {
+                    }
+                    else -> {
                     }
                 }
+
             }
         }
         lifecycleScope.launchWhenStarted {
             viewModel.getUpcomingMovieLiveData().collect {
-                withContext(Dispatchers.Main) {
-                    when (it.status) {
-                        ResultResponse.Status.LOADING -> {
+                when (it.status) {
+                    ResultResponse.Status.LOADING -> {
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+                        val data = it.data as NewPlaying
+                        setupViewLarge(
+                            data.results,
+                            mBinding.layoutUpComingMoviesUp.viewPager,
+                            MoviePagerAdapter.ITEM_TYPE.SMALL,
+                            mBinding.layoutUpComingMoviesUp.shUpcoming
+                        )
+                        mBinding.layoutUpComingMoviesUp.imageButtonMore.setOnClickListener {
+                            navToSeeAll("upcoming", "Upcoming")
                         }
-                        ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
-                            setupViewLarge(
-                                data.results,
-                                mBinding.layoutUpComingMoviesUp.viewPager,
-                                MoviePagerAdapter.ITEM_TYPE.SMALL,
-                                mBinding.layoutUpComingMoviesUp.shUpcoming
-                            )
-                            mBinding.layoutUpComingMoviesUp.imageButtonMore.setOnClickListener {
-                                navToSeeAll("upcoming", "Upcoming")
-                            }
-                            mBinding.layoutUpComingMoviesUp.title = "Upcoming"
-                        }
-                        ResultResponse.Status.ERROR -> {
+                        mBinding.layoutUpComingMoviesUp.title = "Upcoming"
+                    }
+                    ResultResponse.Status.ERROR -> {
 
-                        }
-                        else -> {
-                        }
+                    }
+                    else -> {
                     }
                 }
+
             }
         }
         lifecycleScope.launchWhenStarted {
             viewModel.getPopularMovieLiveData().collect {
-                withContext(Dispatchers.Main) {
-                    when (it.status) {
-                        ResultResponse.Status.LOADING -> {
-                        }
-                        ResultResponse.Status.SUCCESS -> {
-                            val data = it.data as NewPlaying
-                            movieAdapter.data=data.results
+                when (it.status) {
+                    ResultResponse.Status.LOADING -> {
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+                        val data = it.data as NewPlaying
+                        movieAdapter.data = data.results
 
-
-                            mBinding.layoutRcData.imageButtonMore.setOnClickListener {
-                                navToSeeAll("popular", "Popular")
-                            }
+                        mBinding.layoutRcData.imageButtonMore.setOnClickListener {
+                            navToSeeAll("popular", "Popular")
                         }
-                        ResultResponse.Status.ERROR -> {
-                        }
-                        else -> {
-                        }
+                    }
+                    ResultResponse.Status.ERROR -> {
+                    }
+                    else -> {
                     }
                 }
             }
@@ -229,7 +224,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
     }
 
 
-     fun setupClickListeners() {
+    fun setupClickListeners() {
         mBinding.imageButtonSearch.setOnClickListener {
             val extras =
                 FragmentNavigatorExtras(mBinding.cardViewToolbarContent to mBinding.cardViewToolbarContent.transitionName)
