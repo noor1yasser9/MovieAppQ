@@ -85,7 +85,8 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Details
                         mBinding.details = data
-                        genresAdapter.data = data.genres
+                        genresAdapter.data=data.genres
+
 
 
                     }
@@ -111,8 +112,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
                         mBinding.layoutSimilarMovies.title = "Similar"
-                        setupViewLarge(list = data.results,viewPage = mBinding.layoutSimilarMovies.viewPager,
-                            goneView =   mBinding.layoutSimilarMovies.shUpcoming)
+                        setupViewLarge(
+                            list = data.results, viewPage = mBinding.layoutSimilarMovies.viewPager,
+                            goneView = mBinding.layoutSimilarMovies.shUpcoming
+                        )
 
 
                     }
@@ -138,8 +141,11 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
                         mBinding.layoutRecommendationMovies.title = "Recommended"
-                        setupViewLarge(list = data.results,viewPage = mBinding.layoutRecommendationMovies.viewPager,
-                            goneView =  mBinding.layoutRecommendationMovies.shUpcoming)
+                        setupViewLarge(
+                            list = data.results,
+                            viewPage = mBinding.layoutRecommendationMovies.viewPager,
+                            goneView = mBinding.layoutRecommendationMovies.shUpcoming
+                        )
 
 
                     }
@@ -191,13 +197,14 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
     override fun onClickItem(genre: Genre, type: Int) {
 
     }
+
     private fun setupViewLarge(
         list: List<ResultMovie>,
         viewPage: WrapContentViewPager,
-       goneView: View
+        goneView: View
     ) {
         goneView.isVisible = false
-        MoviePagerAdapter( MoviePagerAdapter.ITEM_TYPE.SMALL).also { adapters ->
+        MoviePagerAdapter(MoviePagerAdapter.ITEM_TYPE.SMALL).also { adapters ->
             adapters.setItem(list)
             viewPage.apply {
                 adapter = adapters

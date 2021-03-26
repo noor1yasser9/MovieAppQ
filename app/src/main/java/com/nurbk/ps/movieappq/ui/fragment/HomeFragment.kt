@@ -178,8 +178,8 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                         }
                         ResultResponse.Status.SUCCESS -> {
                             val data = it.data as NewPlaying
-                            movieAdapter.data = data.results
-                            rcData()
+                            movieAdapter.data=data.results
+
 
                             mBinding.layoutRcData.imageButtonMore.setOnClickListener {
                                 navToSeeAll("popular", "Popular")
@@ -193,7 +193,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 }
             }
         }
-
+        rcData()
     }
 
     private fun rcData() {

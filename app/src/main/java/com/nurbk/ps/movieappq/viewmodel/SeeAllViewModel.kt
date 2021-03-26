@@ -16,11 +16,11 @@ class SeeAllViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    var page = 2
+    private var pageSeeAll = 2
     fun getMovie(type: String) {
         viewModelScope.launch {
-            moviesRepositories.getMovie(type, page)
-            page++
+            moviesRepositories.getMovie(type, pageSeeAll)
+            pageSeeAll++
         }
     }
 
@@ -28,4 +28,19 @@ class SeeAllViewModel @Inject constructor(
         moviesRepositories.getMovieMutableLiveData()
 
     fun getData() = moviesRepositories.data
+
+
+    private var pageSearch = 2
+    fun getSearchMovie(query: String) {
+        viewModelScope.launch {
+            moviesRepositories.getSearchMovie(query, pageSearch)
+            pageSearch++
+        }
+    }
+
+    fun getSearchMovieMutableLiveData(): StateFlow<ResultResponse<Any>> =
+        moviesRepositories.getSearchMovieMutableLiveData()
+
+
+    fun getDataSearch() = moviesRepositories.data
 }
