@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailsMovieFragment"
             app:destination="@id/detailsMovieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeAllFragment"
@@ -39,4 +42,12 @@
         android:id="@+id/detailsMovieFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.DetailsMovieFragment"
         android:label="DetailsMovieFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.nurbk.ps.movieappq.ui.fragment.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment" />
+    </fragment>
 </navigation>
