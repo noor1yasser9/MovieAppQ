@@ -216,7 +216,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
 
     private fun getRecommendationsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = movieInterface.getMovieData(id = id,"recommendations")
+            val response = movieInterface.getMovieData(id = id, "recommendations")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
@@ -250,6 +250,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
             }
         }
     }
+
 
     fun getCreditsLiveData(): StateFlow<ResultResponse<Any>> = creditsMutableLiveData
     fun getRecommendationsLiveData(): StateFlow<ResultResponse<Any>> =

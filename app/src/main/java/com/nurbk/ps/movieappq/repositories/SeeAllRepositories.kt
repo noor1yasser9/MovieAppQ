@@ -18,10 +18,13 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
 
     private val movieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
+    private val searchMovieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
+        MutableStateFlow(ResultResponse.loading(""))
 
-     val data = ArrayList<ResultMovie>()
+    val data = ArrayList<ResultMovie>()
 
-    private var resultMovie: ResultMovie? = null
+    val dataSearch = ArrayList<ResultMovie>()
+
 
     fun getMovie(type: String, page: Int) {
         if (page == 1)
@@ -38,17 +41,60 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        movieMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+                        movieMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}",
+                                response.errorBody()!!
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    movieMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+                    movieMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
                 } catch (t: Throwable) {
-                    movieMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                    movieMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
+                }
+            }
+        }
+    }
+
+    fun getSearchMovie(query: String, page: Int) {
+        if (page == 1)
+            dataSearch.clear()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = movieInterface.searchMovie(query = query, page = page)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            data.addAll(it.results)
+                            it.results = data
+                            searchMovieMutableLiveData.emit(ResultResponse.success(it))
+                        }
+
+                    } else {
+                        searchMovieMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}",
+                                response.errorBody()!!
+                            )
+                        )
+                    }
+                } catch (e: HttpException) {
+                    searchMovieMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
+
+                } catch (t: Throwable) {
+                    searchMovieMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
     }
 
     fun getMovieMutableLiveData(): StateFlow<ResultResponse<Any>> = movieMutableLiveData
+    fun getSearchMovieMutableLiveData(): StateFlow<ResultResponse<Any>> = searchMovieMutableLiveData
 }

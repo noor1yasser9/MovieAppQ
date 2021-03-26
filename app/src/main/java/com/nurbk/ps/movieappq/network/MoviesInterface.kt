@@ -30,8 +30,15 @@ interface MoviesInterface {
     @GET("movie/{id}/{movies}")
     suspend fun getMovieData(
         @Path("id") id: String,
-        @Path("movies") movie:String
+        @Path("movies") movie: String
     ): Response<Similar>
+
+
+    @GET("search/movie")
+   suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): Response<NewPlaying>
 
 
 }

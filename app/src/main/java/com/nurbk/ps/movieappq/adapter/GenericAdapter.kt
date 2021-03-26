@@ -30,7 +30,12 @@ class GenericAdapter<T>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
         val binding =
-            DataBindingUtil.inflate<ViewDataBinding>( LayoutInflater.from(parent.context), layoutId, parent, false)
+            DataBindingUtil.inflate<ViewDataBinding>(
+                LayoutInflater.from(parent.context),
+                layoutId,
+                parent,
+                false
+            )
         return GenericViewHolder(binding)
     }
 
@@ -61,16 +66,16 @@ class GenericAdapter<T>(
         fun onClickItem(itemViewModel: T, type: Int)
     }
 
-     val diffCallback = object : DiffUtil.ItemCallback<T>() {
+    val diffCallback = object : DiffUtil.ItemCallback<T>() {
         override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem == newItem
+            return oldItem.hashCode() == newItem.hashCode()
         }
 
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
-     val differ = AsyncListDiffer(this, diffCallback)
+    val differ = AsyncListDiffer(this, diffCallback)
 
     var data: List<T>
         get() = differ.currentList
