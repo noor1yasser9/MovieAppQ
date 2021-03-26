@@ -43,6 +43,7 @@
 
 
         <TextView
+            singleText="@{true}"
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
             android:textColor="@color/colorText"
             android:textSize="@dimen/font_18"
             android:textStyle="bold"
+            android:ellipsize="marquee"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="@+id/cardView"

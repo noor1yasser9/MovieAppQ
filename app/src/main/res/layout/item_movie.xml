@@ -34,10 +34,11 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.appcompat.widget.AppCompatTextView
+            singleText="@{true}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
             android:fontFamily="@font/ff_cocon"
             android:singleLine="true"
             android:text="@{movie.title}"
