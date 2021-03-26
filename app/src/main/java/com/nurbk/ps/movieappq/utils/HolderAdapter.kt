@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.nurbk.ps.movieappq.others.StringConstants
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,11 +45,16 @@ object HolderAdapter {
     fun dateFormat(text: TextView, date: String) {
         var format = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
 
-        val newDate: Date? = format.parse(date)
+        try {
+            val newDate: Date? = format.parse(date)
 
-        format = SimpleDateFormat("yyyy", Locale.getDefault())
+            format = SimpleDateFormat("yyyy", Locale.getDefault())
 
-        text.text = format.format(newDate!!)
+            text.text = format.format(newDate!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     @JvmStatic
