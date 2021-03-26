@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.splashFragment -> {
                     bg(R.drawable.splash_bg, R.color.material_color_amber_A700)
                 }
-                R.id.detailsMovieFragment -> {
+                R.id.detailsMovieFragment, R.id.searchFragment -> {
                     mBinding.toolbar.visibility = View.GONE
                     mBinding.navView.isVisible = false
                 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
@@ -57,7 +58,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-
+        setupClickListeners()
     }
 
 
@@ -227,4 +228,19 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment)
     }
 
+
+     fun setupClickListeners() {
+        mBinding.imageButtonSearch.setOnClickListener {
+            val extras =
+                FragmentNavigatorExtras(mBinding.cardViewToolbarContent to mBinding.cardViewToolbarContent.transitionName)
+            findNavController().navigate(
+                R.id.action_homeFragment_to_searchFragment,
+                null,
+                null,
+                extras
+            )
+        }
+
+
+    }
 }
