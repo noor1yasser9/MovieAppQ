@@ -38,7 +38,7 @@ class SeeAllViewModel @Inject constructor(
         }
     }
 
-    fun getSearchMovieMutableLiveData(): StateFlow<ResultResponse<Any>> =
+    fun getSearchMovieMutableLiveData() =
         moviesRepositories.getSearchMovieMutableLiveData()
 
 

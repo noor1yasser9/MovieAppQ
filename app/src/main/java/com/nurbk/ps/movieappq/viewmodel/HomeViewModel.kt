@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
 
     fun getNewMovie() {
         viewModelScope.launch {
-            moviesRepositories.getnewMovie()
+            moviesRepositories.getNewMovie()
         }
     }
 
@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
         moviesRepositories.getMovieTopLiveData()
 
     fun getNewMovieLiveData(): StateFlow<ResultResponse<Any>> =
-        moviesRepositories.getnewMovieLiveData()
+        moviesRepositories.getNewMovieLiveData()
 
     fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> =
         moviesRepositories.getUpcomingMovieLiveData()
