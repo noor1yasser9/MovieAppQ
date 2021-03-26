@@ -38,7 +38,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         MutableStateFlow(ResultResponse.loading(""))
 
 
-    fun getnewMovie() {
+    fun getNewMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "now_playing", page = 1)
             withContext(Dispatchers.Main) {
@@ -259,7 +259,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getSimilarLiveData(): StateFlow<ResultResponse<Any>> = similarMutableLiveData
     fun getDetailsLiveData(): StateFlow<ResultResponse<Any>> = detailsMutableLiveData
     fun getMovieTopLiveData(): StateFlow<ResultResponse<Any>> = movieTopMutableLiveData
-    fun getnewMovieLiveData(): StateFlow<ResultResponse<Any>> = newMovieMutableLiveData
+    fun getNewMovieLiveData(): StateFlow<ResultResponse<Any>> = newMovieMutableLiveData
     fun getUpcomingMovieLiveData(): StateFlow<ResultResponse<Any>> = movieUpcomingMutableLiveData
     fun getPopularMovieLiveData(): StateFlow<ResultResponse<Any>> = moviePopularMutableLiveData
 

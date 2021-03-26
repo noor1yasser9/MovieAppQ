@@ -1,5 +1,7 @@
 package com.nurbk.ps.movieappq.repositories
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.network.MoviesInterface
 import com.nurbk.ps.movieappq.utils.ResultResponse
@@ -18,8 +20,8 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
 
     private val movieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
-    private val searchMovieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
-        MutableStateFlow(ResultResponse.loading(""))
+    private val searchMovieMutableLiveData: MutableLiveData<ResultResponse<Any>> =
+        MutableLiveData()
 
     val data = ArrayList<ResultMovie>()
 
@@ -69,11 +71,11 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
                         response.body()?.let {
                             data.addAll(it.results)
                             it.results = data
-                            searchMovieMutableLiveData.emit(ResultResponse.success(it))
+                            searchMovieMutableLiveData.postValue(ResultResponse.success(it))
                         }
 
                     } else {
-                        searchMovieMutableLiveData.emit(
+                        searchMovieMutableLiveData.postValue(
                             ResultResponse.error(
                                 "Ooops: ${response.errorBody()}",
                                 response.errorBody()!!
@@ -81,7 +83,7 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
                         )
                     }
                 } catch (e: HttpException) {
-                    searchMovieMutableLiveData.emit(
+                    searchMovieMutableLiveData.postValue(
                         ResultResponse.error(
                             "Ooops: ${e.message()}",
                             e
@@ -89,12 +91,12 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
                     )
 
                 } catch (t: Throwable) {
-                    searchMovieMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
+                    searchMovieMutableLiveData.postValue(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
     }
 
     fun getMovieMutableLiveData(): StateFlow<ResultResponse<Any>> = movieMutableLiveData
-    fun getSearchMovieMutableLiveData(): StateFlow<ResultResponse<Any>> = searchMovieMutableLiveData
+    fun getSearchMovieMutableLiveData(): LiveData<ResultResponse<Any>> = searchMovieMutableLiveData
 }
