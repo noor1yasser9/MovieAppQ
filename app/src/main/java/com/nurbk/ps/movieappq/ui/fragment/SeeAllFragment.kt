@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
@@ -15,6 +16,7 @@ import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.OnScrollListener
 import com.nurbk.ps.movieappq.utils.ResultResponse
+import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import com.nurbk.ps.movieappq.viewmodel.SeeAllViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +36,8 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
     private var isLastPage = false
     private var isScrolling = false
 
+    @Inject
+    lateinit var viewModelHome: HomeViewModel
 
     private val movieAdapter by lazy {
         GenericAdapter(R.layout.item_movie_rec, BR.movie, this)
@@ -60,6 +64,11 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mBinding.imageButtonBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         rcData()
         lifecycleScope.launchWhenStarted {
             viewModel.getMovieMutableLiveData().collect {
@@ -72,8 +81,8 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
                             hideProgressBar()
                             val data = it.data as NewPlaying
                             onScrollListener.totalCount = data.totalPages
-                            movieAdapter.data=data.results
-
+                            movieAdapter.data = data.results
+                            movieAdapter.notifyDataSetChanged()
                         }
                         ResultResponse.Status.ERROR -> {
                             hideProgressBar()
@@ -110,6 +119,7 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
-
+        viewModelHome.getDetailsMovie(itemViewModel.id.toString())
+        findNavController().navigate(R.id.action_seeAllFragment_to_detailsMovieFragment)
     }
 }
