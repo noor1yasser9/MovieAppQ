@@ -21,7 +21,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="@dimen/size_110"
+            android:layout_width="110dp"
             android:layout_height="@dimen/margin_160"
             android:foreground="@drawable/bg_ripple"
             app:cardBackgroundColor="@color/colorPrimary"
@@ -47,7 +47,7 @@
             singleText="@{true}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginStart="18dp"
             android:layout_marginEnd="@dimen/margin_16"
             android:ellipsize="marquee"
             android:text="@{movie.title}"
@@ -63,11 +63,10 @@
             android:id="@+id/tvPopularity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_8"
             android:text='@{movie.voteCount+" Viewers"}'
             android:textColor="@color/material_color_blue_grey_200"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="200 Viewers" />
 
@@ -109,7 +108,6 @@
             android:id="@+id/tvRating"
             android:layout_width="@dimen/size_38"
             android:layout_height="@dimen/size_38"
-            android:layout_marginStart="88dp"
             android:layout_marginBottom="@dimen/margin_8"
             android:background="@drawable/bg_rounded_primary"
             android:drawablePadding="@dimen/margin_8"
@@ -120,7 +118,9 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
             tools:text="8.2" />
 
         <TextView
@@ -134,7 +134,7 @@
             android:text="@{movie.overview}"
             android:textColor="@color/material_color_blue_grey_200"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvRating"
+            app:layout_constraintStart_toStartOf="@+id/tvRelease"
             app:layout_constraintTop_toBottomOf="@+id/tvRelease"
             tools:text="@string/text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
