@@ -3,6 +3,7 @@
     package="com.nurbk.ps.movieappq">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -11,6 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieAppQ">
+        <receiver
+            android:name=".ui.activity.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
