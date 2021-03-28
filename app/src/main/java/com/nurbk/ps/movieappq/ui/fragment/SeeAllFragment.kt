@@ -120,6 +120,8 @@ class SeeAllFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
         viewModelHome.getDetailsMovie(itemViewModel.id.toString())
-        findNavController().navigate(R.id.action_seeAllFragment_to_detailsMovieFragment)
+        val data = Bundle()
+        data.putParcelable("details", itemViewModel)
+        findNavController().navigate(R.id.action_seeAllFragment_to_detailsMovieFragment, data)
     }
 }

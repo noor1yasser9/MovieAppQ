@@ -213,7 +213,9 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
         viewModel.getDetailsMovie(itemViewModel.id.toString())
-        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment)
+        val data = Bundle()
+        data.putParcelable("details", itemViewModel)
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment,data)
 
     }
 

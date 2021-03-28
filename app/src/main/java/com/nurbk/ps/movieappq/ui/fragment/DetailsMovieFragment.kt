@@ -124,6 +124,11 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     ResultResponse.Status.SUCCESS -> {
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
+                        mBinding.layoutSimilarMovies.visibility = if (data.results.isEmpty()) {
+                            View.GONE
+                        } else {
+                            View.VISIBLE
+                        }
                         mBinding.layoutSimilarMovies.title = "Similar"
                         setupViewLarge(
                             list = data.results, viewPage = mBinding.layoutSimilarMovies.viewPager,
@@ -153,6 +158,12 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     ResultResponse.Status.SUCCESS -> {
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
+                        mBinding.layoutRecommendationMovies.visibility =
+                            if (data.results.isEmpty()) {
+                                View.GONE
+                            } else {
+                                View.VISIBLE
+                            }
                         mBinding.layoutRecommendationMovies.title = "Recommended"
                         setupViewLarge(
                             list = data.results,
@@ -283,11 +294,9 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
     override fun onDestroy() {
         bundle?.let {
-
             it.getString("id")?.let {
                 viewModel.getDetailsMovie(it)
             }
-
         }
         super.onDestroy()
     }

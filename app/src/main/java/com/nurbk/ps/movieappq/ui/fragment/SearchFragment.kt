@@ -42,6 +42,7 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
     @Inject
     lateinit var viewModel: SeeAllViewModel
+
     @Inject
     lateinit var viewModelHome: HomeViewModel
 
@@ -127,7 +128,9 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
         viewModelHome.getDetailsMovie(itemViewModel.id.toString())
-        findNavController().navigate(R.id.action_searchFragment_to_detailsMovieFragment)
+        val data = Bundle()
+        data.putParcelable("details", itemViewModel)
+        findNavController().navigate(R.id.action_searchFragment_to_detailsMovieFragment, data)
     }
 
     private val onScrollListener =
