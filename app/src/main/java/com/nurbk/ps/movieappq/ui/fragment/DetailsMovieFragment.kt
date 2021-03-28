@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
@@ -22,6 +23,7 @@ import com.nurbk.ps.movieappq.model.similar.Similar
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.DetailViewModel
+import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
@@ -34,6 +36,14 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
     private val genresAdapter by lazy {
         GenericAdapter(R.layout.item_genres, BR.genres, this)
     }
+
+    private var bundle: Bundle? = null
+
+    @Inject
+    lateinit var viewModel: DetailViewModel
+
+    private lateinit var details: Details
+
     private val creditsAdapter by lazy {
         GenericAdapter(
             R.layout.item_credits,
@@ -56,8 +66,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
     }
 
 
-    @Inject
-    lateinit var viewModel: DetailViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +74,7 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
         mBinding = FragmentMovieDetailBinding.inflate(inflater, container, false).apply {
             executePendingBindings()
         }
+        bundle = arguments
         return mBinding.root
     }
 
@@ -85,6 +94,7 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     ResultResponse.Status.SUCCESS -> {
                         Log.e("OOO", it.data.toString())
                         val data = it.data as Details
+                        details = data
                         mBinding.details = data
                         genresAdapter.data = data.genres
                         genresAdapter.notifyDataSetChanged()
@@ -211,6 +221,7 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
     ) {
         goneView.isVisible = false
         MoviePagerAdapter(MoviePagerAdapter.ITEM_TYPE.SMALL).also { adapters ->
+            adapters.onMovieItemClick = ::onMovieItemClick
             adapters.setItem(list)
             viewPage.apply {
                 adapter = adapters
@@ -218,6 +229,21 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
             }
         }
+    }
+
+
+    private fun onMovieItemClick(movieItem: ResultMovie) {
+        viewModel.getDetailsMovie(movieItem.id.toString())
+        val data = Bundle()
+        data.putString("id", details.id.toString())
+        findNavController().navigate(R.id.action_detailsMovieFragment_self, data)
+    }
+
+    override fun onDestroy() {
+        bundle?.let {
+            viewModel.getDetailsMovie(it.getString("id")!!)
+        }
+        super.onDestroy()
     }
 
 
