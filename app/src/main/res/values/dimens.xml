@@ -41,7 +41,7 @@
     <dimen name="margin_24">24dp</dimen>
     <dimen name="size_240">240dp</dimen>
     <dimen name="margin_140">140dp</dimen>
-    <dimen name="size_110">110dp</dimen>
+    <dimen name="size_110">140dp</dimen>
     <dimen name="margin_160">160dp</dimen>
     <dimen name="size_5">5dp</dimen>
     <dimen name="size_20">20dp</dimen>
@@ -55,7 +55,7 @@
     <dimen name="size_83">83dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
     <dimen name="padding_14dp">14dp</dimen>
-    <dimen name="toolbarLogoSize">48dp</dimen>
+    <dimen name="toolbarLogoSize">60dp</dimen>
     <dimen name="toolbarLogoPadding">16</dimen>
     <dimen name="movieItemLargeHeight">200dp</dimen>
 </resources>
