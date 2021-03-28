@@ -220,11 +220,13 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     private fun onMovieItemClick(movieItem: ResultMovie) {
         viewModel.getDetailsMovie(movieItem.id.toString())
-        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment)
+        val data = Bundle()
+        data.putParcelable("details", movieItem)
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment, data)
     }
 
 
-    fun setupClickListeners() {
+    private fun setupClickListeners() {
         mBinding.imageButtonSearch.setOnClickListener {
             val extras =
                 FragmentNavigatorExtras(mBinding.cardViewToolbarContent to mBinding.cardViewToolbarContent.transitionName)

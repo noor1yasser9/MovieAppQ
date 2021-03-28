@@ -6,7 +6,7 @@
         android:title="@string/title_movie" />
 
     <item
-        android:id="@+id/navigation_tvshow"
-        android:icon="@drawable/ic_twotone_live_tv_24"
-        android:title="@string/title_tvshow" />
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/favorite" />
 </menu>

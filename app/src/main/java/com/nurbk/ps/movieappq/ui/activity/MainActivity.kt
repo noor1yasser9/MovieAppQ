@@ -44,8 +44,10 @@ class MainActivity : AppCompatActivity() {
 
 
         NavigationUI.setupWithNavController(
-            mBinding.toolbar, navController, appBarConfiguration
+            mBinding.navView,
+            navController
         )
+
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
@@ -83,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val destination = navController.currentDestination!!
         when (destination.id) {
-            R.id.homeFragment -> {
+            R.id.navigation_movie -> {
                 finish()
             }
             R.id.splashFragment -> {

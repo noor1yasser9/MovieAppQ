@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.repositories.DatabaseRepository
 import com.nurbk.ps.movieappq.repositories.MoviesRepositories
+import com.nurbk.ps.movieappq.utils.ResultResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -36,13 +37,13 @@ class DetailViewModel @Inject constructor(
         databaseRepository.insertMovie(movie)
     }
 
-    fun deleteMovie(movie: ResultMovie) {
-        databaseRepository.getDeleteMovie(movie)
+    fun deleteMovie(id: Int) {
+        databaseRepository.getDeleteMovie(id)
     }
 
 
-    fun getMovieDeleteLiveData(): StateFlow<Any> = databaseRepository.getMovieDeleteLiveData()
-    fun getMovieIsExistsLiveData(): StateFlow<Any> = databaseRepository.getMovieIsExistsLiveData()
-    fun getMovieInsertLiveData(): StateFlow<Any> = databaseRepository.getMovieInsertLiveData()
+    fun getMovieDeleteLiveData(): StateFlow<ResultResponse<Any>> = databaseRepository.getMovieDeleteLiveData()
+    fun getMovieIsExistsLiveData(): StateFlow<ResultResponse<Any>> = databaseRepository.getMovieIsExistsLiveData()
+    fun getMovieInsertLiveData(): StateFlow<ResultResponse<Any>> = databaseRepository.getMovieInsertLiveData()
 
 }

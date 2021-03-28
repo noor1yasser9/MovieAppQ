@@ -17,9 +17,8 @@ object DataBaseModule {
     @Provides
     @Singleton
     fun provideDB(application: Application): MovieDB {
-        return Room.databaseBuilder(application, MovieDB::class.java, "fav_DB")
-            .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
+        return Room
+            .databaseBuilder(application, MovieDB::class.java, "fav_DB1")
             .build()
     }
 

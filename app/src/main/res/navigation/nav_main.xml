@@ -9,7 +9,7 @@
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/navigation_movie"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -17,7 +17,7 @@
             />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_movie"
         android:name="com.nurbk.ps.movieappq.ui.fragment.HomeFragment"
         android:label="HomeFragment" >
         <action
@@ -54,4 +54,8 @@
             android:id="@+id/action_searchFragment_to_detailsMovieFragment"
             app:destination="@id/detailsMovieFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.nurbk.ps.movieappq.ui.fragment.FavoriteFragment"
+        android:label="navigation_movie" />
 </navigation>

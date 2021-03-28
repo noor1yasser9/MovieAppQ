@@ -48,14 +48,14 @@ class DatabaseRepository @Inject constructor(val movieDAO: MovieDAO) {
         }
     }
 
-    fun getDeleteMovie(movie: ResultMovie) {
+    fun getDeleteMovie(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            movieDeleteLiveData.emit(ResultResponse.success(movieDAO.deleteMovie(movie)))
+            movieDeleteLiveData.emit(ResultResponse.success(movieDAO.deleteMovie(id)))
         }
     }
 
-    fun getMovieAllLiveData(): StateFlow<Any> = movieAllLiveData
-    fun getMovieDeleteLiveData(): StateFlow<Any> = movieDeleteLiveData
-    fun getMovieIsExistsLiveData(): StateFlow<Any> = movieIsExistsLiveData
-    fun getMovieInsertLiveData(): StateFlow<Any> = movieInsertLiveData
+    fun getMovieAllLiveData(): StateFlow<ResultResponse<Any>> = movieAllLiveData
+    fun getMovieDeleteLiveData(): StateFlow<ResultResponse<Any>> = movieDeleteLiveData
+    fun getMovieIsExistsLiveData(): StateFlow<ResultResponse<Any>> = movieIsExistsLiveData
+    fun getMovieInsertLiveData(): StateFlow<ResultResponse<Any>> = movieInsertLiveData
 }

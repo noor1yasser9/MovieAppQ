@@ -43,7 +43,7 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
     lateinit var viewModel: DetailViewModel
 
     private lateinit var details: Details
-
+    private lateinit var resultMovie: ResultMovie
     private val creditsAdapter by lazy {
         GenericAdapter(
             R.layout.item_credits,
@@ -75,6 +75,8 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             executePendingBindings()
         }
         bundle = arguments
+        resultMovie = bundle!!.getParcelable("details")!!
+        viewModel.getIfExists(resultMovie.id)
         return mBinding.root
     }
 
@@ -199,6 +201,44 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             }
         }
 
+        lifecycleScope.launchWhenStarted {
+            viewModel.getMovieIsExistsLiveData().collect {
+                when (it.status) {
+                    ResultResponse.Status.EMPTY -> {
+                        //Log.e("OOO","loading")
+
+                    }
+                    ResultResponse.Status.LOADING -> {
+                        Log.e("OOO", "loading")
+
+
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+
+                        val data = it.data as Boolean
+                        if (data) {
+                            mBinding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                        } else {
+                            mBinding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                        }
+                        mBinding.btnFavorite.setOnClickListener {
+                            if (data) {
+                                viewModel.deleteMovie(resultMovie.id)
+                                mBinding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                            } else {
+                                viewModel.insertMovie(resultMovie)
+                                mBinding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                            }
+                            viewModel.getIfExists(resultMovie.id)
+                        }
+                    }
+                    ResultResponse.Status.ERROR -> {
+                        Log.e("OOO", it.data.toString())
+
+                    }
+                }
+            }
+        }
 
         mBinding.rcCredits.apply {
             adapter = creditsAdapter
@@ -207,6 +247,7 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             adapter = genresAdapter
 
         }
+
 
     }
 
@@ -236,12 +277,17 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
         viewModel.getDetailsMovie(movieItem.id.toString())
         val data = Bundle()
         data.putString("id", details.id.toString())
+        data.putParcelable("details", movieItem)
         findNavController().navigate(R.id.action_detailsMovieFragment_self, data)
     }
 
     override fun onDestroy() {
         bundle?.let {
-            viewModel.getDetailsMovie(it.getString("id")!!)
+
+            it.getString("id")?.let {
+                viewModel.getDetailsMovie(it)
+            }
+
         }
         super.onDestroy()
     }

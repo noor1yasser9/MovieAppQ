@@ -37,5 +37,6 @@
     <string name="something_went_wrong">Something went wrong.</string>
 
     <string name="transition_from_home_to_search" translatable="false">transitionFromHomeToSearch</string>
+    <string name="favorite">Favorite</string>
 
 </resources>
