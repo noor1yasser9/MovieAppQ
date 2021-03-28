@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
@@ -24,6 +25,7 @@ import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.MemberItemDecoration
 import com.nurbk.ps.movieappq.utils.OnScrollListener
 import com.nurbk.ps.movieappq.utils.ResultResponse
+import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import com.nurbk.ps.movieappq.viewmodel.SeeAllViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -40,6 +42,8 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
 
     @Inject
     lateinit var viewModel: SeeAllViewModel
+    @Inject
+    lateinit var viewModelHome: HomeViewModel
 
     private var isLoading = false
     private var isLastPage = false
@@ -73,12 +77,15 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
         super.onViewCreated(view, savedInstanceState)
         rcData()
 
+        mBinding.imageButtonBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         mBinding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
+                    viewModel.getData().clear()
                     viewModel.getSearchMovie(it)
                     search = it
-                    mBinding.searchView.hideKeyboard(requireActivity())
                 }
                 return true
             }
@@ -104,11 +111,9 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
                     hideProgressBar()
                     val data = it.data as NewPlaying
                     onScrollListener.totalCount = data.totalPages
-
                     movieAdapter.data = data.results
-
-                    Log.e("ttttttttttt","getSearchMovieMutableLiveData")
-
+                    movieAdapter.notifyDataSetChanged()
+                    mBinding.searchView.hideKeyboard(requireActivity())
                 }
                 ResultResponse.Status.ERROR -> {
                     hideProgressBar()
@@ -121,7 +126,8 @@ class SearchFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Re
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
-
+        viewModelHome.getDetailsMovie(itemViewModel.id.toString())
+        findNavController().navigate(R.id.action_searchFragment_to_detailsMovieFragment)
     }
 
     private val onScrollListener =
