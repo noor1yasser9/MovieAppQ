@@ -95,13 +95,28 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+                        movieUpcomingMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}",
+                                response.errorBody()!!
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+                    movieUpcomingMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
 
                 } catch (t: Throwable) {
-                    movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                    movieUpcomingMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${t.message}",
+                            t
+                        )
+                    )
                 }
             }
         }
@@ -118,13 +133,23 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         }
 
                     } else {
-                        movieUpcomingMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+                        movieUpcomingMutableLiveData.emit(
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}",
+                                response.errorBody()!!
+                            )
+                        )
                     }
                 } catch (e: HttpException) {
-                    moviePopularMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+                    moviePopularMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${e.message()}",
+                            e
+                        )
+                    )
 
                 } catch (t: Throwable) {
-                    moviePopularMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                    moviePopularMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
@@ -145,16 +170,16 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
 
                     } else {
                         detailsMutableLiveData.emit(
-                            ResultResponse.success(
-                                "Ooops: ${response.errorBody()}", ""
+                            ResultResponse.error(
+                                "Ooops: ${response.errorBody()}", response.errorBody()!!
                             )
                         )
                     }
                 } catch (e: HttpException) {
-                    detailsMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+                    detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
                 } catch (t: Throwable) {
-                    detailsMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                    detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
             }
         }
@@ -173,7 +198,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                     } else {
                         creditsMutableLiveData.emit(
                             ResultResponse.error(
-                                "Ooops: ${response.errorBody()}", ""
+                                "Ooops: ${response.errorBody()}", response.errorBody()!!
                             )
                         )
                     }
