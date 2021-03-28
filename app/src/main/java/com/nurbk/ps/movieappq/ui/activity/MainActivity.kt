@@ -1,7 +1,11 @@
 package com.nurbk.ps.movieappq.ui.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -14,6 +18,7 @@ import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.databinding.ActivityMainBinding
 import com.nurbk.ps.movieappq.others.Constants.setUpStatusBar
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,6 +28,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+
+//        mBinding.button2.setOnClickListener {
+//            onAlarmManager()
+//
+//        }
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragment_nav_host_home) as NavHostFragment?
@@ -83,5 +94,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+//    var time = 1000
+//    fun onAlarmManager() {
+//        val data = SystemClock.elapsedRealtime().toString()
+//        val intent = Intent(this, MyReceiver::class.java)
+//        intent.putExtra("data", data)
+//
+//        val calender = Calendar.getInstance()
+//        calender.set(Calendar.HOUR_OF_DAY, 27)
+//        calender.set(Calendar.MINUTE, 38)
+//
+//        val pendingIntent = PendingIntent.getBroadcast(
+//            this,
+//            SystemClock.elapsedRealtime().toInt(),
+//            intent,
+//            PendingIntent.FLAG_UPDATE_CURRENT
+//        )
+//        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+//        alarmManager.set(AlarmManager.RTC, calender.timeInMillis, pendingIntent)
+//        time += 1000
+//    }
 
 }
