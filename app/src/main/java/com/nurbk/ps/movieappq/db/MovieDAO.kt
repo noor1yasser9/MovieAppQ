@@ -13,8 +13,8 @@ interface MovieDAO {
     suspend fun getAllMovie(): List<ResultMovie>
 
 
-    @Delete
-    suspend fun deleteMovie(resultMovie: ResultMovie): Long
+    @Query("DELETE FROM ResultMovie WHERE id = :id")
+    suspend fun deleteMovie(id: Int)
 
     @Query("SELECT EXISTS (SELECT 1 FROM ResultMovie WHERE id = :id)")
     fun exists(id: Int): Boolean
