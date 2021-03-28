@@ -65,6 +65,18 @@
 
             </androidx.cardview.widget.CardView>
 
+            <ImageButton
+                android:id="@+id/btnFavorite"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="@dimen/size_50"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/button_rounded_primary"
+                android:contentDescription="@string/title_content_des_img_favo"
+                android:src="@drawable/ic_baseline_favorite_border_24"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/expandedImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandedImage" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTrailer"
                 android:layout_width="150dp"
@@ -83,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:text="@{details.originalTitle}"
                 android:textColor="@color/white"
@@ -91,7 +103,7 @@
                 app:fontFamily="@font/ff_cocon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageViewMoviePoster"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/btnFavorite"
                 tools:text="Here is movie name" />
 
 
