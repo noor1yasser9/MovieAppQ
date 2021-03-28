@@ -1,13 +1,18 @@
 package com.nurbk.ps.movieappq.model.newMovie
 
 
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class ResultMovie(
     @SerializedName("adult")
     var adult: Boolean,
     @SerializedName("backdrop_path")
     var backdropPath: String,
+    @Ignore
     @SerializedName("genre_ids")
     var genreIds: List<Int>?,
     @SerializedName("id")
@@ -32,4 +37,7 @@ data class ResultMovie(
     var voteAverage: Double,
     @SerializedName("vote_count")
     var voteCount: Int
-)
+) {
+    @PrimaryKey(autoGenerate = true)
+    var idRoom: Int? = null
+}
