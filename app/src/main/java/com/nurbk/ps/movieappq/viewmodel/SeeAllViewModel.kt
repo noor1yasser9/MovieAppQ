@@ -43,4 +43,6 @@ class SeeAllViewModel @Inject constructor(
 
 
     fun getDataSearch() = moviesRepositories.data
+
+
 }
