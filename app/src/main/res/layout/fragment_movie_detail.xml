@@ -9,6 +9,7 @@
             name="details"
             type="com.nurbk.ps.movieappq.model.detailsMovie.Details" />
     </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
                 android:layout_height="@dimen/size_240"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="@dimen/margin_140"
+                android:elevation="2dp"
                 android:foreground="@drawable/bg_ripple"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="@dimen/radius_8"
