@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,14 +21,10 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         MutableStateFlow(ResultResponse.loading(""))
     private val detailsMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
-
     private val newMovieMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
-
     private val movieUpcomingMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
-
-
     private val moviePopularMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
     private val creditsMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
@@ -41,22 +38,19 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getNewMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "now_playing", page = 1)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            newMovieMutableLiveData.emit(ResultResponse.success(it))
-                        }
-
-                    } else {
-                        newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+            try {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        newMovieMutableLiveData.emit(ResultResponse.success(it))
                     }
-                } catch (e: HttpException) {
-                    newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
-
-                } catch (t: Throwable) {
-                    newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                } else {
+                    newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
                 }
+            } catch (e: HttpException) {
+                newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+
+            } catch (t: Throwable) {
+                newMovieMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
             }
         }
     }
@@ -64,22 +58,18 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getTopMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "top_rated", page = 1)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            movieTopMutableLiveData.emit(ResultResponse.success(it))
-                        }
-
-                    } else {
-                        movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
+            try {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        movieTopMutableLiveData.emit(ResultResponse.success(it))
                     }
-                } catch (e: HttpException) {
-                    movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
-
-                } catch (t: Throwable) {
-                    movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
+                } else {
+                    movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${response.errorBody()}"))
                 }
+            } catch (e: HttpException) {
+                movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${e.message()}"))
+            } catch (t: Throwable) {
+                movieTopMutableLiveData.emit(ResultResponse.success("Ooops: ${t.message}"))
             }
         }
     }
@@ -87,37 +77,34 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getUpcomingMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "upcoming", page = 1)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            movieUpcomingMutableLiveData.emit(ResultResponse.success(it))
-                        }
-
-                    } else {
-                        movieUpcomingMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}",
-                                response.errorBody()!!
-                            )
-                        )
+            try {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        movieUpcomingMutableLiveData.emit(ResultResponse.success(it))
                     }
-                } catch (e: HttpException) {
+                } else {
                     movieUpcomingMutableLiveData.emit(
                         ResultResponse.error(
-                            "Ooops: ${e.message()}",
-                            e
-                        )
-                    )
-
-                } catch (t: Throwable) {
-                    movieUpcomingMutableLiveData.emit(
-                        ResultResponse.error(
-                            "Ooops: ${t.message}",
-                            t
+                            "Ooops: ${response.errorBody()}",
+                            response.errorBody()!!
                         )
                     )
                 }
+            } catch (e: HttpException) {
+                movieUpcomingMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${e.message()}",
+                        e
+                    )
+                )
+
+            } catch (t: Throwable) {
+                movieUpcomingMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${t.message}",
+                        t
+                    )
+                )
             }
         }
     }
@@ -125,32 +112,33 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getPopularMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = "popular", page = 1)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
+            try {
+                if (response.isSuccessful) {
+                    try {
                         response.body()?.let {
                             moviePopularMutableLiveData.emit(ResultResponse.success(it))
                         }
+                    }catch (e:Exception){
 
-                    } else {
-                        movieUpcomingMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}",
-                                response.errorBody()!!
-                            )
-                        )
                     }
-                } catch (e: HttpException) {
-                    moviePopularMutableLiveData.emit(
+
+                } else {
+                    movieUpcomingMutableLiveData.emit(
                         ResultResponse.error(
-                            "Ooops: ${e.message()}",
-                            e
+                            "Ooops: ${response.errorBody()}",
+                            response.errorBody()!!
                         )
                     )
-
-                } catch (t: Throwable) {
-                    moviePopularMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
                 }
+            } catch (e: HttpException) {
+                moviePopularMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${e.message()}",
+                        e
+                    )
+                )
+            } catch (t: Throwable) {
+                moviePopularMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
             }
         }
     }
@@ -158,29 +146,31 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     fun getDetailsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getDetailsMovie(id = id)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
+            try {
+                if (response.isSuccessful) {
+                    try {
                         response.body()?.let {
                             getCreditsMovie(id)
                             getSimilarMovie(id)
                             getRecommendationsMovie(id)
                             detailsMutableLiveData.emit(ResultResponse.success(it))
                         }
+                    } catch (e: Exception) {
 
-                    } else {
-                        detailsMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}", response.errorBody()!!
-                            )
-                        )
                     }
-                } catch (e: HttpException) {
-                    detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
-                } catch (t: Throwable) {
-                    detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
+                } else {
+                    detailsMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${response.errorBody()}", response.errorBody()!!
+                        )
+                    )
                 }
+            } catch (e: HttpException) {
+                detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
+
+            } catch (t: Throwable) {
+                detailsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
             }
         }
     }
@@ -188,26 +178,27 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     private fun getCreditsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getCreditsMovie(id = id)
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
+            try {
+                if (response.isSuccessful) {
+                    try {
                         response.body()?.let {
                             creditsMutableLiveData.emit(ResultResponse.success(it))
                         }
+                    } catch (e: Exception) {
 
-                    } else {
-                        creditsMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}", response.errorBody()!!
-                            )
-                        )
                     }
-                } catch (e: HttpException) {
-                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
-
-                } catch (t: Throwable) {
-                    creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
+                } else {
+                    creditsMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${response.errorBody()}", response.errorBody()!!
+                        )
+                    )
                 }
+            } catch (e: HttpException) {
+                creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
+
+            } catch (t: Throwable) {
+                creditsMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
             }
         }
     }
@@ -215,26 +206,28 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     private fun getSimilarMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getMovieData(id = id, "similar")
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
+            try {
+                if (response.isSuccessful) {
+                    try {
                         response.body()?.let {
                             similarMutableLiveData.emit(ResultResponse.success(it))
                         }
+                    } catch (e: Exception) {
 
-                    } else {
-                        similarMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}", ""
-                            )
-                        )
                     }
-                } catch (e: HttpException) {
-                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
 
-                } catch (t: Throwable) {
-                    similarMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
+                } else {
+                    similarMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${response.errorBody()}", ""
+                        )
+                    )
                 }
+            } catch (e: HttpException) {
+                similarMutableLiveData.emit(ResultResponse.error("Ooops: ${e.message()}", e))
+
+            } catch (t: Throwable) {
+                similarMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
             }
         }
     }
@@ -242,36 +235,37 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     private fun getRecommendationsMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getMovieData(id = id, "recommendations")
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
+            try {
+                if (response.isSuccessful) {
+                    try {
                         response.body()?.let {
                             recommendationsMutableLiveData.emit(ResultResponse.success(it))
                         }
+                    } catch (e: Exception) {
 
-                    } else {
-                        recommendationsMutableLiveData.emit(
-                            ResultResponse.error(
-                                "Ooops: ${response.errorBody()}", ""
-                            )
-                        )
                     }
-                } catch (e: HttpException) {
+                } else {
                     recommendationsMutableLiveData.emit(
                         ResultResponse.error(
-                            "Ooops: ${e.message()}",
-                            e
-                        )
-                    )
-
-                } catch (t: Throwable) {
-                    recommendationsMutableLiveData.emit(
-                        ResultResponse.error(
-                            "Ooops: ${t.message}",
-                            t
+                            "Ooops: ${response.errorBody()}", ""
                         )
                     )
                 }
+            } catch (e: HttpException) {
+                recommendationsMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${e.message()}",
+                        e
+                    )
+                )
+
+            } catch (t: Throwable) {
+                recommendationsMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${t.message}",
+                        t
+                    )
+                )
             }
         }
     }
