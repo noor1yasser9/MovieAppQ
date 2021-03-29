@@ -18,41 +18,30 @@ class HomeViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    fun getTopMovie() {
-        viewModelScope.launch {
-            moviesRepositories.getTopMovie()
-        }
+    private fun getTopMovie() {
+        moviesRepositories.getTopMovie()
+
+    }
+    fun getDetailsMovie(id: String) {
+        moviesRepositories.getDetailsMovie(id)
+
     }
 
-    fun getDetailsMovie(id:String) {
-        viewModelScope.launch {
-            moviesRepositories.getDetailsMovie(id)
-        }
+    private fun getNewMovie() {
+        moviesRepositories.getNewMovie()
     }
 
-    fun getNewMovie() {
-        viewModelScope.launch {
-            moviesRepositories.getNewMovie()
-        }
+    private fun getUpcomingMovie() {
+        moviesRepositories.getUpcomingMovie()
     }
 
-    fun getUpcomingMovie() {
-        viewModelScope.launch {
-            moviesRepositories.getUpcomingMovie()
-        }
-    }
-
-    fun getPopularMovie() {
-        viewModelScope.launch {
-            moviesRepositories.getPopularMovie()
-        }
+    private fun getPopularMovie() {
+        moviesRepositories.getPopularMovie()
     }
 
 
     fun getMovie(type: String) {
-        viewModelScope.launch {
             seeRepositories.getMovie(type, 1)
-        }
     }
 
 
