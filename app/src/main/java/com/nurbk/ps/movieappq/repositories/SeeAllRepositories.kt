@@ -33,7 +33,6 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
             data.clear()
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getNowPlayingMovie(type = type, page = page)
-            withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
@@ -55,7 +54,6 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
 
                 } catch (t: Throwable) {
                     movieMutableLiveData.emit(ResultResponse.error("Ooops: ${t.message}", t))
-                }
             }
         }
     }
@@ -65,7 +63,6 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
             dataSearch.clear()
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.searchMovie(query = query, page = page)
-            withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         response.body()?.let {
@@ -92,7 +89,6 @@ class SeeAllRepositories @Inject constructor(val movieInterface: MoviesInterface
 
                 } catch (t: Throwable) {
                     searchMovieMutableLiveData.postValue(ResultResponse.error("Ooops: ${t.message}", t))
-                }
             }
         }
     }
