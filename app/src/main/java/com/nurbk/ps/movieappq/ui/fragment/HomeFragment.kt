@@ -91,13 +91,10 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 withContext(Dispatchers.Main) {
                     when (it.status) {
                         ResultResponse.Status.LOADING -> {
-                            Log.e("ooo", "LOADING")
-
                         }
                         ResultResponse.Status.SUCCESS -> {
 
                             val data = it.data as NewPlaying
-                            Log.e("ooo", data.toString())
                             setupViewLarge(
                                 data.results,
                                 mBinding.viewPagerNowPlayingMovies,
@@ -106,8 +103,6 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                             )
                         }
                         ResultResponse.Status.ERROR -> {
-                            Log.e("ooo", "ERROR")
-
                         }
                         else -> {
                         }
@@ -240,7 +235,5 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 extras
             )
         }
-
-
     }
 }

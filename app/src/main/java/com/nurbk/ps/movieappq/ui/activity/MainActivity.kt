@@ -1,12 +1,8 @@
 package com.nurbk.ps.movieappq.ui.activity
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -117,5 +113,7 @@ class MainActivity : AppCompatActivity() {
 //        alarmManager.set(AlarmManager.RTC, calender.timeInMillis, pendingIntent)
 //        time += 1000
 //    }
+
+
 
 }

@@ -86,15 +86,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             viewModel.getDerailsMovie().collect {
                 when (it.status) {
                     ResultResponse.Status.EMPTY -> {
-                        //Log.e("OOO","loading")
-
                     }
                     ResultResponse.Status.LOADING -> {
-                        Log.e("OOO", "loading")
-
                     }
                     ResultResponse.Status.SUCCESS -> {
-                        Log.e("OOO", it.data.toString())
                         val data = it.data as Details
                         details = data
                         mBinding.details = data
@@ -104,8 +99,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
                     }
                     ResultResponse.Status.ERROR -> {
-                        Log.e("OOO", it.data.toString())
-
                     }
                 }
             }
@@ -114,15 +107,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             viewModel.getSimilarMovie().collect {
                 when (it.status) {
                     ResultResponse.Status.EMPTY -> {
-                        //Log.e("OOO","loading")
-
                     }
                     ResultResponse.Status.LOADING -> {
-                        Log.e("OOO", "loading")
-
                     }
                     ResultResponse.Status.SUCCESS -> {
-                        Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
                         mBinding.layoutSimilarMovies.visibility = if (data.results.isEmpty()) {
                             View.GONE
@@ -138,8 +126,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
                     }
                     ResultResponse.Status.ERROR -> {
-                        Log.e("OOO", it.data.toString())
-
                     }
                 }
             }
@@ -148,15 +134,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             viewModel.getRecommendationsMovie().collect {
                 when (it.status) {
                     ResultResponse.Status.EMPTY -> {
-                        //Log.e("OOO","loading")
-
                     }
                     ResultResponse.Status.LOADING -> {
-                        Log.e("OOO", "loading")
-
                     }
                     ResultResponse.Status.SUCCESS -> {
-                        Log.e("OOO", it.data.toString())
                         val data = it.data as Similar
                         mBinding.layoutRecommendationMovies.visibility =
                             if (data.results.isEmpty()) {
@@ -174,8 +155,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
                     }
                     ResultResponse.Status.ERROR -> {
-                        Log.e("OOO", it.data.toString())
-
                     }
                 }
             }
@@ -184,16 +163,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             viewModel.getCreditsMovie().collect {
                 when (it.status) {
                     ResultResponse.Status.EMPTY -> {
-                        //Log.e("OOO","loading")
-
                     }
                     ResultResponse.Status.LOADING -> {
-                        Log.e("OOO", "loading")
-
-
                     }
                     ResultResponse.Status.SUCCESS -> {
-                        Log.e("OOO", it.data.toString())
                         val credits = it.data as Credits
                         try {
                             creditsAdapter.data = credits.cast
@@ -205,8 +178,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
                     }
                     ResultResponse.Status.ERROR -> {
-                        Log.e("OOO", it.data.toString())
-
                     }
                 }
             }
@@ -216,16 +187,10 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
             viewModel.getMovieIsExistsLiveData().collect {
                 when (it.status) {
                     ResultResponse.Status.EMPTY -> {
-                        //Log.e("OOO","loading")
-
                     }
                     ResultResponse.Status.LOADING -> {
-                        Log.e("OOO", "loading")
-
-
                     }
                     ResultResponse.Status.SUCCESS -> {
-
                         val data = it.data as Boolean
                         if (data) {
                             mBinding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -244,8 +209,6 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         }
                     }
                     ResultResponse.Status.ERROR -> {
-                        Log.e("OOO", it.data.toString())
-
                     }
                 }
             }

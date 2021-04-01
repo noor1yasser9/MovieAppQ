@@ -1,9 +1,18 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
+
+import android.app.Activity
+import android.content.Intent
+import android.graphics.*
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.ParcelFileDescriptor
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,14 +21,17 @@ import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.adapter.GenericAdapter
 import com.nurbk.ps.movieappq.databinding.FragmentFavoriteBinding
-import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
+import com.nurbk.ps.movieappq.db.MovieDB
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.MemberItemDecoration
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.viewmodel.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.io.*
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<ResultMovie> {
@@ -34,6 +46,13 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
     @Inject
     lateinit var viewModel: FavoriteViewModel
 
+    @Inject
+    lateinit var movieDB: MovieDB
+
+
+    private var llScroll: LinearLayout? = null
+
+    private var bitmap: Bitmap? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +66,10 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+
         lifecycleScope.launchWhenStarted {
             viewModel.getAllMovieLiveData().collect {
                 when (it.status) {
@@ -83,6 +106,13 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
 
 
     }
+
+
+
+
+
+
+
 
 
 }

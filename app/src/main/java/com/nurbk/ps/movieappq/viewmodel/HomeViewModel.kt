@@ -10,7 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val moviesRepositories: MoviesRepositories,
@@ -22,6 +24,7 @@ class HomeViewModel @Inject constructor(
         moviesRepositories.getTopMovie()
 
     }
+
     fun getDetailsMovie(id: String) {
         moviesRepositories.getDetailsMovie(id)
 
@@ -41,7 +44,7 @@ class HomeViewModel @Inject constructor(
 
 
     fun getMovie(type: String) {
-            seeRepositories.getMovie(type, 1)
+        seeRepositories.getMovie(type, 1)
     }
 
 

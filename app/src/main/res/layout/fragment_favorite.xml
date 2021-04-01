@@ -134,6 +134,15 @@
                 </androidx.cardview.widget.CardView>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
+        <org.sufficientlysecure.htmltextview.HtmlTextView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/html_text"
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
