@@ -2,8 +2,10 @@ package com.nurbk.ps.movieappq.utils
 
 
 import android.graphics.Rect;
+import android.util.Log
 import android.util.TypedValue;
 import android.view.View;
+import androidx.annotation.Px
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +17,7 @@ class MemberItemDecoration : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
+
         // only for the last one
         if (parent.getChildAdapterPosition(view) == parent.adapter!!.itemCount - 1) {
             val px = TypedValue.applyDimension(

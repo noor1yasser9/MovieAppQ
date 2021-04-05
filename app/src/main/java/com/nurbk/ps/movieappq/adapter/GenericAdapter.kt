@@ -36,6 +36,7 @@ class GenericAdapter<T>(
                 parent,
                 false
             )
+
         return GenericViewHolder(binding)
     }
 
@@ -91,6 +92,7 @@ class GenericAdapter<T>(
     var data: List<T>
         get() = differ.currentList
         set(value) = differ.submitList(value)
+
 
 
 }
