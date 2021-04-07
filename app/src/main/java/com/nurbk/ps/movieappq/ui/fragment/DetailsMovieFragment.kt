@@ -20,10 +20,11 @@ import com.nurbk.ps.movieappq.model.detailsMovie.Details
 import com.nurbk.ps.movieappq.model.detailsMovie.Genre
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.model.similar.Similar
+import com.nurbk.ps.movieappq.model.trailer.Result
+import com.nurbk.ps.movieappq.model.trailer.Trailer
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.view.WrapContentViewPager
 import com.nurbk.ps.movieappq.viewmodel.DetailViewModel
-import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
@@ -54,15 +55,13 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                 }
             })
     }
-    private val similarAdapter by lazy {
-        GenericAdapter(
-            R.layout.item_movie,
-            BR.movie,
-            object : GenericAdapter.OnListItemViewClickListener<ResultMovie> {
-                override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
+    private  val videoAdapter by lazy {
+        GenericAdapter(R.layout.item_videos,BR.item,object :GenericAdapter.OnListItemViewClickListener<Result>{
+            override fun onClickItem(itemViewModel: Result, type: Int) {
 
-                }
-            })
+            }
+
+        })
     }
 
 
@@ -212,6 +211,28 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     }
                 }
             }
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.getVideosMovie().collect {
+                when (it.status) {
+                    ResultResponse.Status.EMPTY -> {
+                    }
+                    ResultResponse.Status.LOADING -> {
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+                        val data = it.data as Trailer
+                        mBinding.trVideo.shUpcoming.isVisible = false
+                        videoAdapter.data = data.results
+                        Log.e("ooooo",data.results.toString())
+                    }
+
+                    ResultResponse.Status.ERROR -> {
+                    }
+                }
+            }
+        }
+        mBinding.trVideo.recyclerView.apply {
+            adapter = videoAdapter
         }
 
         mBinding.rcCredits.apply {

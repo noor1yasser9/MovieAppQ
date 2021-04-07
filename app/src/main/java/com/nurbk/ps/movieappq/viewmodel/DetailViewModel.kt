@@ -20,6 +20,8 @@ class DetailViewModel @Inject constructor(
     fun getDerailsMovie() = moviesRepositories.getDetailsLiveData()
     fun getCreditsMovie() = moviesRepositories.getCreditsLiveData()
     fun getSimilarMovie() = moviesRepositories.getSimilarLiveData()
+    fun getVideosMovie() = moviesRepositories.getVideosLiveData()
+  //  fun getTrVideo() = moviesRepositories.getTrVideo()
     fun getRecommendationsMovie() = moviesRepositories.getRecommendationsLiveData()
 
 
