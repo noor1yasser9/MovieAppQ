@@ -41,6 +41,17 @@ object HolderAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("loadImage2")
+    fun loadImage2(view: ImageView, imageUrl: String?) {
+        Glide
+            .with(view.context)
+            .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
+            .into(view)
+    }
+
+    @JvmStatic
     @BindingAdapter("text")
     fun dateFormat(text: TextView, date: String) {
         var format = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())

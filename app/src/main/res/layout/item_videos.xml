@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="item"
+            type="com.nurbk.ps.movieappq.model.trailer.Result" />
 
     </data>
 
@@ -23,6 +26,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                loadImage2='@{"https://img.youtube.com/vi/"+item.key+"/maxresdefault.jpg"}'
                 android:id="@+id/imgPoster"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_130"
@@ -49,6 +53,7 @@
                 android:layout_margin="@dimen/margin_8"
                 android:textColor="@color/white"
                 android:maxLines="2"
+                android:text="@{item.name}"
                 android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="@+id/imgPoster"
                 app:layout_constraintEnd_toEndOf="@+id/imgGradient"

@@ -4,6 +4,7 @@ import com.nurbk.ps.movieappq.model.creadits.Credits
 import com.nurbk.ps.movieappq.model.detailsMovie.Details
 import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.similar.Similar
+import com.nurbk.ps.movieappq.model.trailer.Trailer
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -40,5 +41,9 @@ interface MoviesInterface {
         @Query("page") page: Int = 1
     ): Response<NewPlaying>
 
+    @GET("movie/{id}/videos")
+    suspend fun getVideoData(
+        @Path("id") id: String,
+    ): Response<Trailer>
 
 }
