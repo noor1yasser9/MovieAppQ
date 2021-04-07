@@ -238,7 +238,7 @@
 
             <include
                 android:id="@+id/trVideo"
-                layout="@layout/layout_movie_view_pager"
+                layout="@layout/layout_movie_details_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
