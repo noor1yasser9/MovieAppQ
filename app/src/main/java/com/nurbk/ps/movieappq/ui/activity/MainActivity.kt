@@ -13,11 +13,12 @@ import androidx.navigation.ui.NavigationUI
 import com.nurbk.ps.movieappq.R
 import com.nurbk.ps.movieappq.databinding.ActivityMainBinding
 import com.nurbk.ps.movieappq.others.Constants.setUpStatusBar
+import com.nurbk.ps.movieappq.ui.fragment.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.OnDisplay {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -53,6 +54,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.detailsMovieFragment, R.id.searchFragment -> {
                     mBinding.toolbar.visibility = View.GONE
                     mBinding.navView.isVisible = false
+                }
+                R.id.navigation_movie -> {
+
                 }
                 else -> {
                     bg(null, R.color.black)
@@ -93,27 +97,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    var time = 1000
-//    fun onAlarmManager() {
-//        val data = SystemClock.elapsedRealtime().toString()
-//        val intent = Intent(this, MyReceiver::class.java)
-//        intent.putExtra("data", data)
-//
-//        val calender = Calendar.getInstance()
-//        calender.set(Calendar.HOUR_OF_DAY, 27)
-//        calender.set(Calendar.MINUTE, 38)
-//
-//        val pendingIntent = PendingIntent.getBroadcast(
-//            this,
-//            SystemClock.elapsedRealtime().toInt(),
-//            intent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-//        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-//        alarmManager.set(AlarmManager.RTC, calender.timeInMillis, pendingIntent)
-//        time += 1000
-//    }
-
+    override fun onShow() {
+        bg(null, R.color.black)
+        mBinding.toolbar.visibility = View.VISIBLE
+        mBinding.navView.isVisible = true
+    }
 
 
 }
