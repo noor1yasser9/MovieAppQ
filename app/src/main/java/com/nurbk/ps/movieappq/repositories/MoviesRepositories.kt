@@ -35,6 +35,8 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
         MutableStateFlow(ResultResponse.loading(""))
     private val videosMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
         MutableStateFlow(ResultResponse.loading(""))
+    private val imagesMutableLiveData: MutableStateFlow<ResultResponse<Any>> =
+        MutableStateFlow(ResultResponse.loading(""))
 
 
     fun getNewMovie() {
@@ -120,7 +122,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                         response.body()?.let {
                             moviePopularMutableLiveData.emit(ResultResponse.success(it))
                         }
-                    }catch (e:Exception){
+                    } catch (e: Exception) {
 
                     }
 
@@ -273,6 +275,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
             }
         }
     }
+
     private fun getVideosMovie(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = movieInterface.getVideoData(id = id)
@@ -281,6 +284,7 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
                     try {
                         response.body()?.let {
                             videosMutableLiveData.emit(ResultResponse.success(it))
+                            getImagesMovie(id)
                         }
                     } catch (e: Exception) {
 
@@ -312,7 +316,46 @@ class MoviesRepositories @Inject constructor(val movieInterface: MoviesInterface
     }
 
 
+    private fun getImagesMovie(id: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = movieInterface.getImagesMovie(id = id)
+            try {
+                if (response.isSuccessful) {
+                    try {
+                        response.body()?.let {
+                            imagesMutableLiveData.emit(ResultResponse.success(it))
+                        }
+                    } catch (e: Exception) {
+
+                    }
+                } else {
+                    imagesMutableLiveData.emit(
+                        ResultResponse.error(
+                            "Ooops: ${response.errorBody()}", ""
+                        )
+                    )
+                }
+            } catch (e: HttpException) {
+                imagesMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${e.message()}",
+                        e
+                    )
+                )
+
+            } catch (t: Throwable) {
+                imagesMutableLiveData.emit(
+                    ResultResponse.error(
+                        "Ooops: ${t.message}",
+                        t
+                    )
+                )
+            }
+        }
+    }
+
     fun getCreditsLiveData(): StateFlow<ResultResponse<Any>> = creditsMutableLiveData
+    fun getImagesLiveData(): StateFlow<ResultResponse<Any>> = imagesMutableLiveData
     fun getRecommendationsLiveData(): StateFlow<ResultResponse<Any>> =
         recommendationsMutableLiveData
 
