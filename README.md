@@ -8,7 +8,21 @@ Most of us can relate to kicking back on the couch and enjoying a movie with fri
 
 This app uses the API from <a href="https://developers.themoviedb.org/3">The Movie DB</a>
 
-## 🌟 Features
+## Screenshot
+![ss](https://user-images.githubusercontent.com/41232970/113998952-3a769900-9862-11eb-9fff-72ba0f21ea1e.png)
+
+
+## ✨ Features Project Android:
+- 100% Kotlin
+- Dagger Hilt
+- MVVM architecture
+- Android architecture components
+- Navigation Jetpack
+- Single activity
+- dataBinding
+- Coroutines
+
+## 🌟 Features App
 - Discover the most popular and the most rated movies
 - User can view and play trailers on youtube
 - Shows a list of reviews for each movie
