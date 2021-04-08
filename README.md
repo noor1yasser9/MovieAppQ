@@ -8,8 +8,11 @@ Most of us can relate to kicking back on the couch and enjoying a movie with fri
 
 This app uses the API from <a href="https://developers.themoviedb.org/3">The Movie DB</a>
 
+## <a href="https://www.youtube.com/watch?v=GbTNhwJ2upY&ab_channel=NoorEl-Nahhal">Video</a>
+
 ## Screenshot
 ![ss](https://user-images.githubusercontent.com/41232970/113998952-3a769900-9862-11eb-9fff-72ba0f21ea1e.png)
+
 
 
 ## ✨ Features Project Android:
