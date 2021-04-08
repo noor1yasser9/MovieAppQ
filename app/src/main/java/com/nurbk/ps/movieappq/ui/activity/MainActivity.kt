@@ -55,13 +55,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnDisplay {
                     mBinding.toolbar.visibility = View.GONE
                     mBinding.navView.isVisible = false
                 }
-                R.id.navigation_movie -> {
-
+                R.id.navigation_movie, R.id.navigation_favorite -> {
                 }
                 else -> {
                     bg(null, R.color.black)
-                    mBinding.toolbar.visibility = View.VISIBLE
-                    mBinding.navView.isVisible = true
+                    mBinding.toolbar.visibility = View.GONE
+                    mBinding.navView.isVisible = false
                 }
             }
 

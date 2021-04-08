@@ -2,6 +2,7 @@ package com.nurbk.ps.movieappq.ui.fragment
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.net.Uri
@@ -53,11 +54,15 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
 
     @Inject
     lateinit var movieDB: MovieDB
+    private lateinit var onDisplay: HomeFragment.OnDisplay
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is HomeFragment.OnDisplay) {
+            onDisplay = context
+        }
+    }
 
-    private var llScroll: LinearLayout? = null
-
-    private var bitmap: Bitmap? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,10 +76,7 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
+        onDisplay.onShow()
         lifecycleScope.launchWhenStarted {
             viewModel.getAllMovieLiveData().collect {
                 when (it.status) {
