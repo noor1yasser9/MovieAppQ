@@ -2,6 +2,7 @@ package com.nurbk.ps.movieappq.network
 
 import com.nurbk.ps.movieappq.model.creadits.Credits
 import com.nurbk.ps.movieappq.model.detailsMovie.Details
+import com.nurbk.ps.movieappq.model.image.Images
 import com.nurbk.ps.movieappq.model.newMovie.NewPlaying
 import com.nurbk.ps.movieappq.model.similar.Similar
 import com.nurbk.ps.movieappq.model.trailer.Trailer
@@ -36,7 +37,7 @@ interface MoviesInterface {
 
 
     @GET("search/movie")
-   suspend fun searchMovie(
+    suspend fun searchMovie(
         @Query("query") query: String,
         @Query("page") page: Int = 1
     ): Response<NewPlaying>
@@ -45,5 +46,10 @@ interface MoviesInterface {
     suspend fun getVideoData(
         @Path("id") id: String,
     ): Response<Trailer>
+
+    @GET("movie/{id}/images")
+    suspend fun getImagesMovie(
+        @Path("id") id: String,
+    ): Response<Images>
 
 }
