@@ -119,14 +119,11 @@
                             app:layout_constraintStart_toEndOf="@id/imageViewLogo"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButtonSearch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_marginEnd="@dimen/margin_8"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:padding="@dimen/padding_8"
-                            android:src="@drawable/ic_search_black_24dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

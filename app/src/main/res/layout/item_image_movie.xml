@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="poster"
+            type="com.nurbk.ps.movieappq.model.image.Poster" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                loadImage="@{poster.filePath}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent" />

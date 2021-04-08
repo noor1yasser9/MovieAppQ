@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main.xml"
     app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/navigation_movie"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/navigation_movie"
         android:name="com.nurbk.ps.movieappq.ui.fragment.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_seeAllFragment"
-            app:destination="@id/seeAllFragment" />
+            app:destination="@id/seeAllFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_detailsMovieFragment"
-            app:destination="@id/detailsMovieFragment" />
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
@@ -33,29 +41,49 @@
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.SeeAllFragment"
-        android:label="SeeAllFragment" >
+        android:label="SeeAllFragment">
         <action
             android:id="@+id/action_seeAllFragment_to_detailsMovieFragment"
-            app:destination="@id/detailsMovieFragment" />
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/detailsMovieFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.DetailsMovieFragment"
-        android:label="DetailsMovieFragment" >
+        android:label="DetailsMovieFragment">
         <action
             android:id="@+id/action_detailsMovieFragment_self"
-            app:destination="@id/detailsMovieFragment" />
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.nurbk.ps.movieappq.ui.fragment.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_detailsMovieFragment"
-            app:destination="@id/detailsMovieFragment" />
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.nurbk.ps.movieappq.ui.fragment.FavoriteFragment"
-        android:label="navigation_movie" />
+        android:label="navigation_movie">
+        <action
+            android:id="@+id/action_navigation_favorite_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
 </navigation>

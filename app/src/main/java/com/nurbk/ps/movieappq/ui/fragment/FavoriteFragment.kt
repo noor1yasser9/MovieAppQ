@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nurbk.ps.movieappq.BR
 import com.nurbk.ps.movieappq.R
@@ -26,6 +27,7 @@ import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.utils.MemberItemDecoration
 import com.nurbk.ps.movieappq.utils.ResultResponse
 import com.nurbk.ps.movieappq.viewmodel.FavoriteViewModel
+import com.nurbk.ps.movieappq.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.*
@@ -45,6 +47,9 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
 
     @Inject
     lateinit var viewModel: FavoriteViewModel
+
+    @Inject
+    lateinit var viewModelHome: HomeViewModel
 
     @Inject
     lateinit var movieDB: MovieDB
@@ -103,16 +108,12 @@ class FavoriteFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<
     }
 
     override fun onClickItem(itemViewModel: ResultMovie, type: Int) {
-
+        viewModelHome.getDetailsMovie(itemViewModel.id.toString())
+        val data = Bundle()
+        data.putParcelable("details", itemViewModel)
+        findNavController().navigate(R.id.action_navigation_favorite_to_detailsMovieFragment, data)
 
     }
-
-
-
-
-
-
-
 
 
 }

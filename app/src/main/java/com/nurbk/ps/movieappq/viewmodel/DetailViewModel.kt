@@ -19,6 +19,7 @@ class DetailViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     fun getDerailsMovie() = moviesRepositories.getDetailsLiveData()
     fun getCreditsMovie() = moviesRepositories.getCreditsLiveData()
+    fun getImagesLiveData() = moviesRepositories.getImagesLiveData()
     fun getSimilarMovie() = moviesRepositories.getSimilarLiveData()
     fun getVideosMovie() = moviesRepositories.getVideosLiveData()
   //  fun getTrVideo() = moviesRepositories.getTrVideo()

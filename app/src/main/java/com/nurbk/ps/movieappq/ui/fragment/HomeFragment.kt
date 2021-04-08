@@ -1,5 +1,6 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,11 +39,17 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     @Inject
     lateinit var viewModel: HomeViewModel
-
+    private lateinit var onDisplay: OnDisplay
     private val movieAdapter by lazy {
         GenericAdapter(R.layout.item_movie_rec, BR.movie, this)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnDisplay) {
+            onDisplay = context
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +64,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onDisplay.onShow()
         setupViewModel()
         setupClickListeners()
     }
@@ -211,7 +218,7 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
         viewModel.getDetailsMovie(itemViewModel.id.toString())
         val data = Bundle()
         data.putParcelable("details", itemViewModel)
-        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment,data)
+        findNavController().navigate(R.id.action_homeFragment_to_detailsMovieFragment, data)
 
     }
 
@@ -235,5 +242,9 @@ class HomeFragment : Fragment(), GenericAdapter.OnListItemViewClickListener<Resu
                 extras
             )
         }
+    }
+
+    interface OnDisplay {
+        fun onShow()
     }
 }
