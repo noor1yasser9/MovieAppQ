@@ -1,5 +1,7 @@
 package com.nurbk.ps.movieappq.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,9 @@ import com.nurbk.ps.movieappq.model.creadits.Cast
 import com.nurbk.ps.movieappq.model.creadits.Credits
 import com.nurbk.ps.movieappq.model.detailsMovie.Details
 import com.nurbk.ps.movieappq.model.detailsMovie.Genre
+import com.nurbk.ps.movieappq.model.detailsMovie.ProductionCompany
+import com.nurbk.ps.movieappq.model.image.Images
+import com.nurbk.ps.movieappq.model.image.Poster
 import com.nurbk.ps.movieappq.model.newMovie.ResultMovie
 import com.nurbk.ps.movieappq.model.similar.Similar
 import com.nurbk.ps.movieappq.model.trailer.Result
@@ -55,15 +60,39 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                 }
             })
     }
-    private  val videoAdapter by lazy {
-        GenericAdapter(R.layout.item_videos,BR.item,object :GenericAdapter.OnListItemViewClickListener<Result>{
-            override fun onClickItem(itemViewModel: Result, type: Int) {
+    private val videoAdapter by lazy {
+        GenericAdapter(
+            R.layout.item_videos,
+            BR.item,
+            object : GenericAdapter.OnListItemViewClickListener<Result> {
+                override fun onClickItem(itemViewModel: Result, type: Int) {
+                    playVideo(itemViewModel)
+                }
 
-            }
-
-        })
+            })
     }
+    private val imagesAdapter by lazy {
+        GenericAdapter(
+            R.layout.item_image_movie,
+            BR.poster,
+            object : GenericAdapter.OnListItemViewClickListener<Poster> {
+                override fun onClickItem(itemViewModel: Poster, type: Int) {
 
+                }
+
+            })
+    }
+    private val productionAdapter by lazy {
+        GenericAdapter(
+            R.layout.item_production_company,
+            BR.production,
+            object : GenericAdapter.OnListItemViewClickListener<ProductionCompany> {
+                override fun onClickItem(itemViewModel: ProductionCompany, type: Int) {
+
+                }
+
+            })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,8 +123,16 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                         mBinding.details = data
                         genresAdapter.data = data.genres
                         genresAdapter.notifyDataSetChanged()
-
-
+                        productionAdapter.data = data.productionCompanies
+                        mBinding.rvProduction.shUpcoming.isVisible = false
+                        mBinding.rvProduction.recyclerView.adapter = productionAdapter
+                        mBinding.rvProduction.title = "Production"
+                        mBinding.rvProduction.visibility =
+                            if (data.productionCompanies.isEmpty()) {
+                                View.GONE
+                            } else {
+                                View.VISIBLE
+                            }
                     }
                     ResultResponse.Status.ERROR -> {
                     }
@@ -221,9 +258,43 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
                     }
                     ResultResponse.Status.SUCCESS -> {
                         val data = it.data as Trailer
+                        mBinding.trVideo.title = "Trailers"
                         mBinding.trVideo.shUpcoming.isVisible = false
                         videoAdapter.data = data.results
-                        Log.e("ooooo",data.results.toString())
+                        mBinding.trVideo.visibility = if (data.results.isEmpty()) {
+                            View.GONE
+                        } else {
+                            mBinding.btnTrailer.setOnClickListener {
+                                playVideo(data.results[0])
+                            }
+                            View.VISIBLE
+                        }
+                    }
+
+                    ResultResponse.Status.ERROR -> {
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.getImagesLiveData().collect {
+                when (it.status) {
+                    ResultResponse.Status.EMPTY -> {
+                    }
+                    ResultResponse.Status.LOADING -> {
+                    }
+                    ResultResponse.Status.SUCCESS -> {
+                        val data = it.data as Images
+                        mBinding.rcImage.title = "Images"
+                        mBinding.rcImage.shUpcoming.isVisible = false
+                        imagesAdapter.data = data.posters
+                        mBinding.rcImage.recyclerView.adapter = imagesAdapter
+                        mBinding.rcImage.visibility = if (data.backdrops.isEmpty()) {
+                            View.GONE
+                        } else {
+                            View.VISIBLE
+                        }
                     }
 
                     ResultResponse.Status.ERROR -> {
@@ -243,7 +314,15 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
 
         }
 
+        visibility()
+    }
 
+    private fun visibility() {
+        mBinding.rcImage.imageButtonMore.isVisible = false
+        mBinding.trVideo.imageButtonMore.isVisible = false
+        mBinding.rvProduction.imageButtonMore.isVisible = false
+        mBinding.layoutRecommendationMovies.imageButtonMore.isVisible = false
+        mBinding.layoutSimilarMovies.imageButtonMore.isVisible = false
     }
 
     override fun onClickItem(genre: Genre, type: Int) {
@@ -285,5 +364,9 @@ class DetailsMovieFragment : Fragment(), GenericAdapter.OnListItemViewClickListe
         super.onDestroy()
     }
 
+    private fun playVideo(item: Result) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://${item.key}"))
+        startActivity(intent)
+    }
 
 }
