@@ -2,7 +2,7 @@
 <h1 align="center">MovieAppQ</h1>
 <h1 align = "center"><img src="https://user-images.githubusercontent.com/41232970/113998848-20d55180-9862-11eb-97b2-ebd9b5caa3f5.gif"/></h1>
 <p align = "center"><b>MovieAppQ</b> is a sample Android project using <a href="https://developers.themoviedb.org/3">The Movie DB</a> API based on MVVM architecture. It showcases the app development with well-designed architecture and up-to-date Android tech stacks.</p>
-
+ 
 ## Overview Project
 Most of us can relate to kicking back on the couch and enjoying a movie with friends and family. In this project, you’ll build an app to allow users to discover the most popular movies playing.
 
