@@ -54,7 +54,7 @@ This app uses the API from <a href="https://developers.themoviedb.org/3">The Mov
 *   [DataBinding](https://developer.android.com/topic/libraries/data-binding/)
 *   [OkHttp](https://github.com/square/okhttp)
 *   [Timber](https://github.com/JakeWharton/timber)
-
+ 
 
 
 ## License
